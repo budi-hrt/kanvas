@@ -3,13 +3,13 @@
 
     <!-- Page Heading -->
 
-    <h5 class="h5 mb-2 text-gray-800">Pemasukan Stok Awal</h5>
+    <h5 class="h5 mb-2 text-gray-800">Pemasukan Stok Akhir</h5>
     <div class="row">
         <div class="col-md-3">
             <div class="form-group row">
                 <label for="inputPassword" class="col-sm-5 col-form-label">Nomor Stok</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control form-control-sm" id="nomor" name="nomor" readonly>
+                    <input type="text" class="form-control form-control-sm" id="nomor" name="nomor" value="<?= $this->session->userdata('nmr'); ?>" readonly>
                 </div>
             </div>
         </div>
@@ -23,8 +23,8 @@
         </div>
         <div class="col-md-6">
             <div class="input-group input-group-sm mb-3">
-                <input type="hidden" name="id_sales" id="id_sales" class="id_sales" value="<?= $this->session->userdata('id_sales'); ?>">
-                <input type="text" class="form-control " name="nama_sales" id="nama_sales" placeholder="Cari/Pilih Sales" readonly value="<?= $this->session->userdata('nama_sales'); ?>">
+                <input type="hidden" name="id_sales" id="id_sales" class="id_sales" value="<?= $this->session->userdata('id_sls'); ?>">
+                <input type="text" class="form-control " name="nama_sales" id="nama_sales" placeholder="Cari/Pilih Sales" readonly value="<?= $this->session->userdata('nm_sales'); ?>">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-toggle="modal" data-target="#modal-sales"><i class="fas fa-search"></i></button>
                 </div>
@@ -35,9 +35,9 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">List Stok Awal</h6>
+            <h6 class="m-0 font-weight-bold text-primary">List Stok</h6>
             <div class="d-flex justify-content-end mt-n4">
-                <a href="javascript:;" id="simpan" style="display: none">Simpan</a><a href="javascript:;" id="buat">Buat</a>
+                <a href="javascript:;" id="simpan" style="display: none">Simpan</a><a href="javascript:;" id="cek">Cek</a>
             </div>
         </div>
         <div class="card-body">
@@ -45,15 +45,20 @@
                 <table class="table table-sm table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead class="bg-primary text-white">
                         <tr>
-                            <th>#</th>
-                            <th>Kode</th>
-                            <th>Produk</th>
+                            <th rowspan="2">#</th>
+                            <th rowspan="2">Kode</th>
+                            <th rowspan="2">Produk</th>
+                            <th colspan="2">Awal</th>
+                            <th colspan="2">Akhir</th>
+                        </tr>
+                        <tr>
                             <th>Dos</th>
                             <th>Bks</th>
-                            <th></th>
+                            <th>Dos</th>
+                            <th>Bks</th>
                         </tr>
                     </thead>
-                    <tbody id="detil_awal">
+                    <tbody id="detil_akhir">
 
                     </tbody>
                 </table>
@@ -67,25 +72,7 @@
 </div>
 <!-- End of Main Content -->
 
-<!-- Table hideen -->
-<table class="table table-sm table-bordered" width="100%" cellspacing="0" style="display: none">
-    <thead class="bg-primary text-white">
-        <tr>
-            <th>Kode</th>
-            <th>Produk</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        foreach ($produk as $p) : ?>
-            <tr>
-                <input type="hidden" class="kode" value="<?= $p['kode']; ?>">
-                <td width="150px"><?= $p['kode']; ?></td>
-                <td width="150px"><?= $p['nama_produk']; ?></td>
-            </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+
 
 
 
@@ -93,7 +80,7 @@
 <footer class="sticky-footer bg-white">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
+            <span>Copyright &copy; Budi Harto 2020</span>
         </div>
     </div>
 </footer>
@@ -190,32 +177,35 @@
             autoclose: true
         });
 
-        nomor();
+        tampil_stok();
         show_hide();
     });
 
 
     function show_hide() {
-        const item = $('input[name="item"]');
-        if (item.val() == '') {
+        const sls = $('input[name="id_sales"]');
+        if (sls.val() == '') {
             $('#simpan').hide();
-            $('#buat').show();
         } else {
             $('#simpan').show();
-            $('#buat').hide();
+            $('#cek').hide();
         }
 
     }
 
 
     function nomor() {
-        // const nomor = $('#nomor').val();
+        const id = $('#id_sales').val();
         $.ajax({
-            url: base_url + 'stok/nomor',
+            type: 'get',
+            url: base_url + 'stok_akhir/nomor',
+            data: {
+                id: id
+            },
             dataType: 'json',
             success: function(data) {
-                $('input[name=nomor]').val(data.nomor);
-                tampil_stok();
+                console.log(data)
+                $('input[name=nomor]').val(data.nomor_transaksi);
             }
         });
     }
@@ -228,14 +218,14 @@
         $('input[name=nama_sales]').val(nama_sales);
     });
 
-    $('#buat').on('click', function() {
+    $('#cek').on('click', function() {
         const id = $('#id_sales').val();
         if (id == '') {
             alert('Pilih Sales');
         } else {
             $.ajax({
                 type: 'get',
-                url: base_url + 'stok/get_stok',
+                url: base_url + 'stok_akhir/get_stok',
                 data: {
                     id: id
                 },
@@ -243,15 +233,21 @@
                 success: function(response) {
                     if (response.success) {
                         if (response.type == 'ada') {
-                            alert('ada');
-                        } else if (response.type == 'kosong') {
-                            simpan_detil();
-                            simpan_session_sales();
+                            console.log(response.nomor);
+                            $('input[name="nomor"]').val(response.nomor);
                             setTimeout(function() {
+                                simpan_session_sales();
                                 tampil_stok();
-                                $('#simpan').show();
-                                $('#buat').hide();
-                            }, 500)
+                            }, 300);
+                        } else if (response.type == 'kosong') {
+                            alert('kosong');
+                            // simpan_detil();
+                            // simpan_session_sales();
+                            // setTimeout(function() {
+                            //     tampil_stok();
+                            //     $('#simpan').show();
+                            //     $('#buat').hide();
+                            // }, 500)
                         }
                     }
                 }
@@ -285,12 +281,14 @@
     function simpan_session_sales() {
         const id_sales = $('#id_sales').val();
         const nama_sales = $('#nama_sales').val();
+        const nomor = $('#nomor').val();
         $.ajax({
             type: 'post',
-            url: base_url + 'stok/simpan_session_sales',
+            url: base_url + 'stok_akhir/simpan_session_sales',
             data: {
                 nama_sales: nama_sales,
-                id_sales: id_sales
+                id_sales: id_sales,
+                nomor: nomor
             }
         });
     }
@@ -316,12 +314,12 @@
         const nomor = $('#nomor').val();
         $.ajax({
             type: 'get',
-            url: base_url + 'stok/tampil_stok',
+            url: base_url + 'stok_akhir/tampil_stok',
             data: {
                 nomor: nomor
             },
             success: function(html) {
-                $('#detil_awal').html(html);
+                $('#detil_akhir').html(html);
                 show_hide();
             }
         });

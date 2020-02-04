@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Stok extends CI_Controller
+class Stok_akhir extends CI_Controller
 {
     public function __construct()
     {
@@ -13,20 +13,14 @@ class Stok extends CI_Controller
     public function index()
     {
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['produk'] = $this->stok->get_all()->result_array();
-
         $data['sales'] = $this->stok->data_sales()->result_array();
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar');
         $this->load->view('template/topbar', $data);
-        $this->load->view('stok', $data);
+        $this->load->view('stok_akhir', $data);
     }
 
-    public function nomor()
-    {
-        $data['nomor'] = $this->stok->nomor_stok();
-        echo json_encode($data);
-    }
+
 
 
     public function get_stok()
@@ -34,14 +28,17 @@ class Stok extends CI_Controller
         $msg['success'] = false;
         $id_sales = $this->input->get('id');
         $status = 'Pending';
-        $cek = $this->db->get_where('transaksi', ['id_sales' => $id_sales, 'status' => $status]);
+        $cek = $this->db->get_where('penjualan', ['id_sales' => $id_sales, 'status_penjualan' => $status]);
         if ($cek->num_rows() < 1) {
             $msg['success'] = true;
             $msg['type'] = 'kosong';
+
             echo json_encode($msg);
         } else {
+            $data = $cek->row_array();
             $msg['success'] = true;
             $msg['type'] = 'ada';
+            $msg['nomor'] = $data['nomor_transaksi'];
             echo json_encode($msg);
         }
     }
@@ -70,20 +67,22 @@ class Stok extends CI_Controller
 
     public function simpan_session_sales()
     {
-        $array = array('id_sales', 'nama_sales');
+        $array = array('id_sls', 'nm_sales', 'nmr');
         $this->session->unset_userdata($array);
         $id = $this->input->post('id_sales');
         $nama = $this->input->post('nama_sales');
-        $sales = [
-            'id_sales' => $id,
-            'nama_sales' => $nama
+        $nomor = $this->input->post('nomor');
+        $sls = [
+            'id_sls' => $id,
+            'nm_sales' => $nama,
+            'nmr' => $nomor
         ];
-        $this->session->set_userdata($sales);
+        $this->session->set_userdata($sls);
     }
 
     public function hapus_session_sales()
     {
-        $array = array('id_sales', 'nama_sales');
+        $array = array('id_sls', 'nm_sales', 'nmr');
         $this->session->unset_userdata($array);
     }
 
@@ -96,35 +95,64 @@ class Stok extends CI_Controller
     public function tampil_stok()
     {
         $nomor = $this->input->get('nomor');
-        $this->db->select('t.id as id_detil,t.awal,t.akhir,t.kode_produk,p.nama_produk,p.banding');
+        $this->db->select('t.id as id_detil,t.awal,t.akhir,t.kode_produk,p.nama_produk,p.banding,p.harga');
         $this->db->from('transaksi t');
         $this->db->join('produk p', 'p.kode=t.kode_produk', 'left');
         $this->db->where('t.nomor_stok', $nomor);
         $data = $this->db->get();
         $no = 1;
+        $total = 0;
+        $terjual = 0;
+        $total = 0;
+        $banding = 0;
         $dos = 0;
         $bks = 0;
         $res = 0;
-        $banding = 0;
+        $ados = 0;
+        $abks = 0;
+        $ares = 0;
+        $tdos = 0;
+        $tbks = 0;
+        $tres = 0;
         if ($data->num_rows() > 1) {
-            foreach ($data->result_array() as $t) {
-                if ($t['awal'] >= $banding) {
-                    $banding = $t['banding'];
-                    $dos = floor($t['awal'] / $banding);
+            foreach ($data->result_array() as $r) {
+                $terjual = $r['awal'] - $r['akhir'];
+                $total = $terjual * $r['harga'];
+                $banding = $r['banding'];
+                if ($r['awal'] >= $banding) {
+                    $dos = floor($r['awal'] / $banding);
                     $res = $banding * $dos;
-                    $bks = $t['awal'] - $res;
+                    $bks = $r['awal'] - $res;
                 } else {
                     $dos = 0;
-                    $bks = $t['awal'];
+                    $bks = $r['awal'];
+                }
+
+                if ($r['akhir'] >= $banding) {
+                    $ados = floor($r['akhir'] / $banding);
+                    $ares = $banding * $ados;
+                    $abks = $r['akhir'] - $ares;
+                } else {
+                    $ados = 0;
+                    $abks = $r['akhir'];
+                }
+                if ($terjual >= $banding) {
+                    $tdos = floor($terjual / $banding);
+                    $tres = $banding * $tdos;
+                    $tbks = $terjual - $tres;
+                } else {
+                    $tdos = 0;
+                    $tbks = $terjual;
                 }
                 echo '
                 <tr>
                 <td>' . $no++ . '</td>
-                <td>' . $t['kode_produk'] . '</td>
-                <td>' . $t['nama_produk'] . '</td>
+                <td>' . $r['kode_produk'] . '</td>
+                <td>' . $r['nama_produk'] . '</td>
                 <td>' . $dos . '</td>
                 <td>' . $bks . '</td>
-                <td><a href="javascript:;" class="item-edit" data-id="' . $t['id_detil'] . '" data-banding="' . $t['banding'] . '"  data-dos="' . $dos . '" data-bks="' . $bks . '"><i class="fas fa-edit"></i></a></td>
+                <td>' . $ados . '</td>
+                <td>' . $abks . '</td>
                 </tr>
                 
                 

@@ -50,11 +50,32 @@ class Stok_model extends CI_model
         $id_sales = $this->input->post('id_sales');
         $tanggal = date('Y-m-d', strtotime($this->input->post('tanggal')));
         $nomor = $this->input->post('nomor');
+        $id_user = $this->input->post('id_user');
         $data = array(
             'tanggal' => $tanggal,
             'nomor_transaksi' => $nomor,
-            'id_sales' => $id_sales
+            'id_sales' => $id_sales,
+            'date_created' => time(),
+            'date_update' => time(),
+            'id_user' => $id_user
         );
         $this->db->insert('penjualan', $data);
+    }
+
+
+    public function update_awal()
+    {
+        $id = $this->input->post('id');
+        $banding = $this->input->post('banding');
+        // $awal = $this->input->post('awal');
+        $dos = $this->input->post('dos');
+        $bks = $this->input->post('bks');
+        $stok = $dos * $banding;
+        $awal = $stok + $bks;
+        $data = array(
+            'awal' => $awal
+        );
+        $this->db->where('id', $id);
+        $this->db->update('transaksi', $data);
     }
 }

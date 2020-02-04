@@ -48,6 +48,11 @@
             <i class="fas fa-fw fa-edit"></i>
             <span>Stok Awal</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('stok_akhir'); ?>">
+            <i class="fas fa-fw fa-edit"></i>
+            <span>Stok Akhir</span></a>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
