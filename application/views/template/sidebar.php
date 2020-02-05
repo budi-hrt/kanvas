@@ -53,6 +53,11 @@
             <i class="fas fa-fw fa-edit"></i>
             <span>Stok Akhir</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('penjualan'); ?>">
+            <i class="fas fa-fw fa-edit"></i>
+            <span>List Penjualan</span></a>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

@@ -44,25 +44,22 @@ class Stok_akhir extends CI_Controller
     }
 
 
-    public function simpan_detil()
+    public function update_detil()
     {
-        $nomor = $_POST['nomor'];
-        $kode_produk = $_POST['kode'];
-        $tanggal = date('Y-m-d', strtotime($_POST['tanggal']));
-        $id_sales = $_POST['id_sales'];
+        $id = $_POST['id_trs'];
+
+        $status = 'Stok';
         $data = array();
         $index = 0; // Set index array awal dengan 0
-        foreach ($kode_produk as $k) { // Kita buat perulangan berdasarkan nis sampai data terakhir
+        foreach ($id as $k) { // Kita buat perulangan berdasarkan nis sampai data terakhir
             array_push($data, array(
-                'nomor_stok' => $nomor,
-                'kode_produk' => $k,  // Ambil dan set data nama sesuai index array dari $index
-                'tanggal_awal' => $tanggal,  // Ambil dan set data alamat sesuai index array dari $index
-                'id_sales' => $id_sales  // Ambil dan set data telepon sesuai index array dari $index
+                'id' => $k,
+                'status' => $status  // Ambil dan set data telepon sesuai index array dari $index
             ));
 
             $index++;
         }
-        $this->stok->save_batch($data);
+        $this->db->update_batch('transaksi', $data, 'id');
     }
 
     public function simpan_session_sales()
@@ -86,9 +83,9 @@ class Stok_akhir extends CI_Controller
         $this->session->unset_userdata($array);
     }
 
-    public function simpan_tb()
+    public function update_tb()
     {
-        $this->stok->insert_tb();
+        $this->stok->update_tb();
     }
 
 
@@ -104,6 +101,7 @@ class Stok_akhir extends CI_Controller
         $total = 0;
         $terjual = 0;
         $total = 0;
+        $subttl = 0;
         $banding = 0;
         $dos = 0;
         $bks = 0;
@@ -146,24 +144,27 @@ class Stok_akhir extends CI_Controller
                 }
                 echo '
                 <tr>
-                <td>' . $no++ . '</td>
+                <input type="hidden" class="id_trs" value="' . $r['id_detil'] . '">
+                <td class="text-center"><a href="javascript:;" class="item-edit" data-id="' . $r['id_detil'] . '" data-banding="' . $r['banding'] . '"  data-dos="' . $ados . '" data-bks="' . $abks . '"><i class="fas fa-edit"></i></a></td>
                 <td>' . $r['kode_produk'] . '</td>
                 <td>' . $r['nama_produk'] . '</td>
                 <td>' . $dos . '</td>
                 <td>' . $bks . '</td>
                 <td>' . $ados . '</td>
                 <td>' . $abks . '</td>
+                <input type="hidden" class="total" value="' . $total . '">
                 </tr>
-                
-                
                 ';
+                $subttl += $total;
             }
-            echo '<input type="hidden" name="item" value="1">';
+            echo '<input type="hidden" name="item" value="1">
+            <input type="hidden" name="subttl" value="' . $subttl . '">
+            ';
         } else {
             echo '
                 <tr>
                 <input type="hidden" name="item" >
-                <td colspan="6" rowspan="3" class="text-center"> Belum Ada Stok</td>
+                <td colspan="7" rowspan="3" class="text-center"> Belum Ada Stok</td>
                 
                 </tr>
 
@@ -173,8 +174,48 @@ class Stok_akhir extends CI_Controller
     }
 
 
-    public function update_awal()
+    public function update_akhir()
     {
-        $this->stok->update_awal();
+        $this->stok->update_akhir();
+    }
+
+    public function penjualan($nomor)
+    {
+
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+
+        $data['nomor'] = $this->stok->get_penjualan($nomor)->row_array();
+        $this->load->view('template/header', $data);
+        $this->load->view('template/topbar', $data);
+        $this->load->view('penjualan', $data);
+    }
+
+
+    public function tampil_penjualan()
+    {
+        $nomor = $this->input->get('nomor');
+        $this->db->select('t.id as id_detil,t.awal,t.akhir,t.kode_produk,p.nama_produk,p.banding,p.harga');
+        $this->db->from('transaksi t');
+        $this->db->join('produk p', 'p.kode=t.kode_produk', 'left');
+        $this->db->where('t.nomor_stok', $nomor);
+        $data = $this->db->get();
+
+        if ($data->num_rows() > 1) {
+            // foreach ($data->result_array() as $r) {
+
+            // }
+            $dt['data'] = $data->result_array();
+            $this->load->view('list_penjualan', $dt);
+        } else {
+            echo '
+                <tr>
+                <input type="hidden" name="item" >
+                <td colspan="7" rowspan="3" class="text-center"> Belum Ada Stok</td>
+                
+                </tr>
+
+
+                ';
+        }
     }
 }

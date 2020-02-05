@@ -6,3 +6,15 @@
 .btn-produk h5 {
 	margin-top: 20px;
 }
+
+
+.modal-loading-2 {
+	max-width: 300px;
+
+}
+
+.modal-loading-2>.modal-content {
+	max-height: 25px;
+	border: 1px solid #E2B709;
+	background-color: #FFE57E;
+}

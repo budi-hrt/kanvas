@@ -37,7 +37,9 @@
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">List Stok</h6>
             <div class="d-flex justify-content-end mt-n4">
-                <a href="javascript:;" id="simpan" style="display: none">Simpan</a><a href="javascript:;" id="cek">Cek</a>
+                <a href="javascript:;" class="btn btn-sm btn-success mb-n2" id="simpan" style="display: none"> Simpan & Print</a>
+                <a href="javascript:;" class="btn btn-sm btn-warning mb-n2" id="cek">Cek Data Stok</a>
+                <a href="javascript:;" class="btn btn-sm btn-danger mb-n2 ml-1 kosongkan" style="display: none">Kosongkan</a>
             </div>
         </div>
         <div class="card-body">
@@ -45,7 +47,7 @@
                 <table class="table table-sm table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead class="bg-primary text-white">
                         <tr>
-                            <th rowspan="2">#</th>
+                            <th rowspan="2"></th>
                             <th rowspan="2">Kode</th>
                             <th rowspan="2">Produk</th>
                             <th colspan="2">Awal</th>
@@ -73,21 +75,6 @@
 <!-- End of Main Content -->
 
 
-
-
-
-<!-- Footer -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Budi Harto 2020</span>
-        </div>
-    </div>
-</footer>
-<!-- End of Footer -->
-
-</div>
-<!-- End of Content Wrapper -->
 
 
 
@@ -133,7 +120,7 @@
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content ">
             <div class="modal-header">
-                <h5 class="modal-title">Masukan Stok Awal</h5>
+                <h5 class="modal-title">Masukan Stok Akhir</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -165,8 +152,18 @@
     </div>
 </div>
 
+<!-- modal-loading -->
+<div class="modal bd-example-modal-sm " id="modal-loading" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered modal-loading-2" role="document">
+        <div class="modal-content text-center shadow">
+            <!-- <div class="modal-body text-center"> -->
+            <label id="label-info">Please wait...</label>
+            <!-- </div> -->
 
-<input type="hidden" id="item">
+        </div>
+    </div>
+</div>
+
 
 
 <?php $this->load->view('template/footer'); ?>
@@ -186,9 +183,11 @@
         const sls = $('input[name="id_sales"]');
         if (sls.val() == '') {
             $('#simpan').hide();
+            $('.kosongkan').hide();
         } else {
             $('#simpan').show();
             $('#cek').hide();
+            $('.kosongkan').show();
         }
 
     }
@@ -256,27 +255,6 @@
     });
 
 
-    function simpan_detil() {
-        const kode = [];
-        $('.kode').each(function() {
-            kode.push($(this).val());
-        });
-
-        const nomor = $('#nomor').val();
-        const tanggal = $('#tanggal').val();
-        const id_sales = $('#id_sales').val();
-        $.ajax({
-            type: 'post',
-            url: base_url + 'stok/simpan_detil',
-            data: {
-                nomor: nomor,
-                kode: kode,
-                tanggal: tanggal,
-                id_sales: id_sales
-            }
-        });
-
-    }
 
     function simpan_session_sales() {
         const id_sales = $('#id_sales').val();
@@ -325,8 +303,16 @@
         });
     }
 
+    $('.kosongkan').on('click', function() {
+        $('#modal-loading').modal('show');
+        hapus_session_sales();
+        setTimeout(function() {
+            $('#modal-loading').modal('hide');
+            window.location.href = base_url + "stok_akhir";
+        }, 500);
+    });
 
-    $('#detil_awal').on('click', '.item-edit', function() {
+    $('#detil_akhir').on('click', '.item-edit', function() {
         const id = $(this).attr('data-id');
         const banding = $(this).attr('data-banding');
         const dos = $(this).attr('data-dos');
@@ -346,7 +332,7 @@
         const bks = $('input[name="bks"]').val();
         $.ajax({
             type: 'post',
-            url: base_url + 'stok/update_awal',
+            url: base_url + 'stok_akhir/update_akhir',
             data: {
                 id: id,
                 banding: banding,
@@ -363,22 +349,24 @@
     $('#simpan').on('click', function() {
         const nomor = $('#nomor').val();
         const tanggal = $('#tanggal').val();
-        const id_sales = $('#id_sales').val();
+        const subttl = $('input[name="subttl"]').val();
         const id_user = '<?= $user['id_user']; ?>';
         $.ajax({
             type: 'post',
-            url: base_url + 'stok/simpan_tb',
+            url: base_url + 'stok_akhir/update_tb',
             data: {
                 nomor: nomor,
                 tanggal: tanggal,
-                id_sales: id_sales,
+                subttl: subttl,
                 id_user: id_user
             },
             success: function() {
                 hapus_session_sales();
+                update_detil();
+                $('#modal-loading').modal('show');
                 setTimeout(function() {
-                    window.location.href = base_url + 'stok';
-
+                    $('#modal-loading').modal('hide');
+                    window.location.href = base_url + 'stok_akhir/penjualan/' + nomor;
                 }, 300);
             }
         });
@@ -386,10 +374,27 @@
 
     function hapus_session_sales() {
         $.ajax({
-            url: base_url + 'stok/hapus_session_sales'
+            url: base_url + 'stok_akhir/hapus_session_sales'
         });
 
 
+    }
+
+
+    function update_detil() {
+        const id_trs = [];
+        $('.id_trs').each(function() {
+            id_trs.push($(this).val());
+        });
+
+        $.ajax({
+            type: 'post',
+            url: base_url + 'stok_akhir/update_detil',
+            data: {
+                id_trs: id_trs
+
+            }
+        });
     }
 </script>
 <?php $this->load->view('template/foothtml'); ?>
