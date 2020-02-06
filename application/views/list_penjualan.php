@@ -16,7 +16,11 @@ $tbks = 0;
 $tres = 0;
 
 foreach ($data as $r) : ?>
-    <?php $terjual = $r['awal'] - $r['akhir'];
+    <?php
+
+
+    $terjual = $r['awal'] - $r['akhir'];
+
     $total = $terjual * $r['harga'];
     $banding = $r['banding'];
     if ($r['awal'] >= $banding) {

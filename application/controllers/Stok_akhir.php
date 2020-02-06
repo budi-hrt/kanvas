@@ -186,7 +186,7 @@ class Stok_akhir extends CI_Controller
 
         $data['nomor'] = $this->stok->get_penjualan($nomor)->row_array();
         $this->load->view('template/header', $data);
-        $this->load->view('template/topbar', $data);
+        $this->load->view('template/topbar_p', $data);
         $this->load->view('penjualan', $data);
     }
 

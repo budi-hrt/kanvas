@@ -377,7 +377,6 @@
             url: base_url + 'stok_akhir/hapus_session_sales'
         });
 
-
     }
 
 
