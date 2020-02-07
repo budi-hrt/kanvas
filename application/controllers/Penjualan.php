@@ -19,4 +19,44 @@ class Penjualan extends CI_Controller
         $this->load->view('template/topbar', $data);
         $this->load->view('daftar_penjualan', $data);
     }
+
+
+    public function get($nomor)
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['penjualan'] = $this->penjualan->get_edit($nomor)->row_array();
+        $this->load->view('template/header', $data);
+        $this->load->view('template/sidebar');
+        $this->load->view('template/topbar', $data);
+        $this->load->view('edit-penjualan', $data);
+    }
+
+
+    public function tampil()
+    {
+        $nomor = $this->input->get('nomor');
+        $this->db->select('t.id as id_detil,t.awal,t.akhir,t.kode_produk,p.nama_produk,p.banding,p.harga');
+        $this->db->from('transaksi t');
+        $this->db->join('produk p', 'p.kode=t.kode_produk', 'left');
+        $this->db->where('t.nomor_stok', $nomor);
+        $data = $this->db->get();
+
+        if ($data->num_rows() > 1) {
+            // foreach ($data->result_array() as $r) {
+
+            // }
+            $dt['data'] = $data->result_array();
+            $this->load->view('edit_list', $dt);
+        } else {
+            echo '
+                <tr>
+                <input type="hidden" name="item" >
+                <td colspan="7" rowspan="3" class="text-center"> Belum Ada Stok</td>
+                
+                </tr>
+
+
+                ';
+        }
+    }
 }

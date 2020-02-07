@@ -3,12 +3,13 @@
 
     <!-- Page Heading -->
 
-    <h5 class="h5 mb-2 text-gray-800">Pemasukan Stok Awal</h5>
+    <h5 class="h5 mb-2 text-gray-800">Edit Data</h5>
     <div class="row">
         <div class="col-md-3">
             <div class="form-group row">
                 <label for="inputPassword" class="col-sm-5 col-form-label">Nomor Stok</label>
                 <div class="col-sm-7">
+
                     <input type="text" class="form-control form-control-sm" id="nomor" name="nomor" readonly>
                 </div>
             </div>

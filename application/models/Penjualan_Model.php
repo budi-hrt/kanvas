@@ -13,4 +13,13 @@ class Penjualan_model extends CI_model
         $query =  $this->db->get();
         return $query;
     }
+    public function get_edit($nomor)
+    {
+        $this->db->select('p.id as id_pj, p.tanggal,p.nomor_transaksi,p.jumlah,s.nama_sales,p.id_sales');
+        $this->db->from('penjualan p');
+        $this->db->join('sales s', 's.id=p.id_sales', 'dsc');
+        $this->db->where('nomor_transaksi', $nomor);
+        $query =  $this->db->get();
+        return $query;
+    }
 }

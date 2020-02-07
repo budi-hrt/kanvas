@@ -50,28 +50,13 @@ foreach ($data as $r) : ?>
     }; ?>
 
     <tr>
-        <?php if ($r['awal'] == 0 && $r['akhir'] == 0) {
-            echo '
-        <td  style="display: none"">' . $no++ . '</td>
-        <td  style="display: none">' . $r['nama_produk'] . '</td>
-        <td  style="display: none"">' . $dos . ' / ' . $bks . '</td>
-        <td  style="display: none"">' . $ados . ' / ' . $abks . '</td>
-        <td  style="display: none"">' . $tdos . ' / ' . $tbks . '</td>
-        <td  style="display: none">' . number_format($total, 0, ',', '.') . '</td>';
-        } else {
-            echo '
-            <td class="text-center">' . $no++ . '</td>
-            <td>' . $r['nama_produk'] . '</td>
-            <td class="text-center">' . $dos . ' / ' . $bks . '</td>
-            <td class="text-center">' . $ados . ' / ' . $abks . '</td>
-            <td class="text-center">' . $tdos . ' / ' . $tbks . '</td>
-            <td class="text-right">' . number_format($total, 0, ',', '.') . '</td>
-            ';
-        }; ?>
 
-
-
-
+        <td class="text-center"><?= $no++; ?></td>
+        <td><?= $r['nama_produk']; ?></td>
+        <td class="text-center"><?= $dos; ?>/ <?= $bks; ?></td>
+        <td class="text-center"><?= $ados; ?>/ <?= $abks; ?></td>
+        <td class="text-center"><?= $tdos; ?>/ <?= $tbks; ?></td>
+        <td class="text-right"><?= number_format($total, 0, ',', '.'); ?></td>
 
     </tr>
 
