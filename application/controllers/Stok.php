@@ -108,8 +108,8 @@ class Stok extends CI_Controller
         $banding = 0;
         if ($data->num_rows() > 1) {
             foreach ($data->result_array() as $t) {
+                $banding = $t['banding'];
                 if ($t['awal'] >= $banding) {
-                    $banding = $t['banding'];
                     $dos = floor($t['awal'] / $banding);
                     $res = $banding * $dos;
                     $bks = $t['awal'] - $res;
