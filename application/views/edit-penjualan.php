@@ -35,7 +35,7 @@
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Data Penjualan</h6>
             <div class="d-flex justify-content-end mt-n4">
-                <a href="javascript:;" id="simpan" style="display: none">Simpan</a><a href="javascript:;" id="buat">Buat</a>
+                <a href="javascript:;" id="simpan" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Simpan</a>
             </div>
         </div>
         <div class="card-body">
@@ -82,25 +82,27 @@
                 </button>
             </div>
             <div class="modal-body ">
-                <div class="row justify-content-center">
-                    <div class="col-md-8 ">
+                <form id="form-stok" action="">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 ">
 
-                        <input type="hidden" name="id_detil">
-                        <input type="hidden" name="banding">
-                        <div class="form-group row">
-                            <label for="inputPassword" class="col-sm-3 col-form-label">Dos</label>
-                            <div class="col-sm-9">
-                                <input type="number" class="form-control " id="dos" name="dos">
+                            <input type="hidden" name="id_detil">
+                            <input type="hidden" name="banding">
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-3 col-form-label">Dos</label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control " id="dos" name="dos">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputPassword" class="col-sm-3 col-form-label">Bks</label>
-                            <div class="col-sm-9">
-                                <input type="number" class="form-control " id="bks" name="bks">
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-3 col-form-label">Bks</label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control " id="bks" name="bks">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
                 <button class="btn  btn-primary btn-block" id="update">Simpan</button>
             </div>
 
@@ -139,6 +141,63 @@
             }
         });
     }
+
+
+    $('#detil_penjualan').on('click', '.item-awal', function() {
+        $('#form-stok')[0].reset();
+        $('#form-stok').attr('action', base_url + 'penjualan/update_awal');
+        $('#modal-stok').find('.modal-title').text('Ubah Stok Awal');
+        const id = $(this).attr('data-id');
+        const banding = $(this).attr('data-banding');
+        const dos = $(this).attr('data-dos');
+        const bks = $(this).attr('data-bks');
+        $('input[name="id_detil"]').val(id);
+        $('input[name="banding"]').val(banding);
+        $('input[name="dos"]').val(dos);
+        $('input[name="bks"]').val(bks);
+        $('#modal-stok').modal('show');
+    });
+    $('#detil_penjualan').on('click', '.item-akhir', function() {
+        $('#form-stok')[0]['reset'];
+        $('#form-stok').attr('action', base_url + 'penjualan/update_akhir');
+        $('#modal-stok').find('.modal-title').text('Ubah Stok Akhir');
+        const id = $(this).attr('data-ida');
+        const banding = $(this).attr('data-bandinga');
+        const dos = $(this).attr('data-ados');
+        const bks = $(this).attr('data-abks');
+        $('input[name="id_detil"]').val(id);
+        $('input[name="banding"]').val(banding);
+        $('input[name="dos"]').val(dos);
+        $('input[name="bks"]').val(bks);
+        $('#modal-stok').modal('show');
+    });
+
+
+
+    $('#update').on('click', function() {
+        const url = $('#form-stok').attr('action');
+        const data = $('#form-stok').serialize();
+        // const id = $('input[name="id_detil"]').val();
+        // const banding = $('input[name="banding"]').val();
+        // const dos = $('input[name="dos"]').val();
+        // const bks = $('input[name="bks"]').val();
+        $.ajax({
+            type: 'ajax',
+            method: 'post',
+            url: url,
+            data: data,
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    $('#form-stok')[0].reset();
+                    $('#modal-stok').modal('hide');
+                    tampil_stok();
+                } else {
+                    alert('error');
+                }
+            }
+        });
+    });
 </script>
 
 

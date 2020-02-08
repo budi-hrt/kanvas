@@ -22,4 +22,47 @@ class Penjualan_model extends CI_model
         $query =  $this->db->get();
         return $query;
     }
+
+
+
+    public function update_awal()
+    {
+        $id = $this->input->post('id_detil');
+        $banding = $this->input->post('banding');
+        // $awal = $this->input->post('awal');
+        $dos = $this->input->post('dos');
+        $bks = $this->input->post('bks');
+        $stok = $dos * $banding;
+        $awal = $stok + $bks;
+        $data = array(
+            'awal' => $awal
+        );
+        $this->db->where('id', $id);
+        $this->db->update('transaksi', $data);
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function update_akhir()
+    {
+        $id = $this->input->post('id_detil');
+        $banding = $this->input->post('banding');
+        // $awal = $this->input->post('awal');
+        $dos = $this->input->post('dos');
+        $bks = $this->input->post('bks');
+        $stok = $dos * $banding;
+        $akhir = $stok + $bks;
+        $data = array(
+            'akhir' => $akhir
+        );
+        $this->db->where('id', $id);
+        $this->db->update('transaksi', $data);
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

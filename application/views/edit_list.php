@@ -53,8 +53,12 @@ foreach ($data as $r) : ?>
 
         <td class="text-center"><?= $no++; ?></td>
         <td><?= $r['nama_produk']; ?></td>
-        <td class="text-center"><?= $dos; ?>/ <?= $bks; ?></td>
-        <td class="text-center"><?= $ados; ?>/ <?= $abks; ?></td>
+        <td class="text-center ">
+            <a href="javascript:;" class="item-awal" data-id="<?= $r['id_detil']; ?>" data-banding="<?= $r['banding']; ?>" data-dos="<?= $dos; ?>" data-bks="<?= $bks; ?>"><?= $dos; ?>/ <?= $bks; ?></a>
+        </td>
+        <td class="text-center">
+            <a href="javascript:;" class=" item-akhir" data-ida="<?= $r['id_detil']; ?>" data-bandinga="<?= $r['banding']; ?>" data-ados="<?= $ados; ?>" data-abks="<?= $abks; ?>"><?= $ados; ?>/ <?= $abks; ?></a>
+        </td>
         <td class="text-center"><?= $tdos; ?>/ <?= $tbks; ?></td>
         <td class="text-right"><?= number_format($total, 0, ',', '.'); ?></td>
 

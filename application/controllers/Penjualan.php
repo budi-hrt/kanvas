@@ -59,4 +59,24 @@ class Penjualan extends CI_Controller
                 ';
         }
     }
+    public function update_awal()
+    {
+        $result = $this->penjualan->update_awal();
+        $msg['success'] = false;
+        $msg['type'] = 'awal';
+        if ($result) {
+            $msg['success'] = true;
+        }
+        echo json_encode($msg);
+    }
+    public function update_akhir()
+    {
+        $result = $this->penjualan->update_akhir();
+        $msg['success'] = false;
+        $msg['type'] = 'akhir';
+        if ($result) {
+            $msg['success'] = true;
+        }
+        echo json_encode($msg);
+    }
 }
