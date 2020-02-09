@@ -169,9 +169,6 @@
 </div>
 
 
-<input type="hidden" id="item">
-
-
 <?php $this->load->view('template/footer'); ?>
 <script>
     $(document).ready(function() {

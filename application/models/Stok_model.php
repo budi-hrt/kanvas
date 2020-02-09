@@ -10,6 +10,17 @@ class Stok_model extends CI_model
         return $query;
     }
 
+    public function get_stokAwal()
+    {
+        $this->db->select('p.id as id_pj, p.tanggal,p.nomor_transaksi,p.jumlah,s.nama_sales');
+        $this->db->from('penjualan p');
+        $this->db->join('sales s', 's.id=p.id_sales', 'dsc');
+        $this->db->order_by('p.id', 'desc');
+        $this->db->where('status_penjualan', 'Pending');
+        $query =  $this->db->get();
+        return $query;
+    }
+
 
     function nomor_stok()
     {

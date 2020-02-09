@@ -49,6 +49,12 @@
             <span>Stok Awal</span></a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('stok/list'); ?>">
+            <i class="fas fa-fw fa-edit"></i>
+            <span>List Stok Awal</span></a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="<?= base_url('stok_akhir'); ?>">
             <i class="fas fa-fw fa-edit"></i>
             <span>Stok Akhir</span></a>
