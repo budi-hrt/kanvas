@@ -49,7 +49,7 @@
             <span>Stok Awal</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('stok/list'); ?>">
+        <a class="nav-link" href="<?= base_url('stok/list_awl'); ?>">
             <i class="fas fa-fw fa-edit"></i>
             <span>List Stok Awal</span></a>
     </li>
