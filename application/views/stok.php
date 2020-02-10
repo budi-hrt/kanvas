@@ -3,51 +3,56 @@
 
     <!-- Page Heading -->
 
-    <h5 class="h5 mb-2 text-gray-800">Edit Data</h5>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="form-group row">
-                <label for="inputPassword" class="col-sm-5 col-form-label">Nomor Stok</label>
-                <div class="col-sm-7">
+    <h5 class="h5 mb-2 text-gray-800"><img src="<?= base_url('assets/img/icon/laptop.png'); ?>" style="width: 64px;"> Tambah Data Stok Awal</h5>
+    <div class="card border-top">
+        <div class="card-body pt-3 pb-0" style="padding:0.10rem;">
+            <div class="row ml-2 mr-2">
+                <div class="col-md-3">
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-5 col-form-label">Nomor Stok</label>
+                        <div class="col-sm-7">
 
-                    <input type="text" class="form-control form-control-sm" id="nomor" name="nomor" readonly>
+                            <input type="text" class="form-control form-control-sm" id="nomor" name="nomor" readonly>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group row">
-                <label for="inputPassword" class="col-sm-3 col-form-label">Tanggal </label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control form-control-sm datepicker" id="tanggal" name="tanggal" data-date-format="dd-mm-yyyy" value="<?= date('d-m-Y'); ?>" autocomplete="off">
+                <div class="col-md-3">
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-4 col-form-label">Tanggal</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control form-control-sm datepicker" id="tanggal" name="tanggal" data-date-format="dd-mm-yyyy" value="<?= date('d-m-Y'); ?>" autocomplete="off">
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="input-group input-group-sm mb-3">
-                <input type="hidden" name="id_sales" id="id_sales" class="id_sales" value="<?= $this->session->userdata('id_sales'); ?>">
-                <input type="text" class="form-control " name="nama_sales" id="nama_sales" placeholder="Cari/Pilih Sales" readonly value="<?= $this->session->userdata('nama_sales'); ?>">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-toggle="modal" data-target="#modal-sales"><i class="fas fa-search"></i></button>
+                <div class="col-md-4">
+                    <div class="input-group input-group-sm mb-3">
+                        <input type="hidden" name="id_sales" id="id_sales" class="id_sales" value="<?= $this->session->userdata('id_sales'); ?>">
+                        <input type="text" class="form-control " name="nama_sales" id="nama_sales" placeholder="Cari/Pilih Sales" readonly value="<?= $this->session->userdata('nama_sales'); ?>">
+                        <div class="input-group-append">
+                            <button class="btn btn-warning" type="button" id="button-addon2" data-toggle="modal" data-target="#modal-sales"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="d-flex justify-content-end">
+                        <a href="javascript:;" id="simpan" style="display: none" class="btn btn-sm btn-primary"><i class="fas fa-share-square"></i> Simpan</a>
+                        <a href="javascript:;" id="buat" class="btn btn-sm bg-gradient-light"><i class="fas fa-pencil-alt"></i> Buat Stok Awal</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">List Stok Awal</h6>
-            <div class="d-flex justify-content-end mt-n4">
-                <a href="javascript:;" id="simpan" style="display: none">Simpan</a><a href="javascript:;" id="buat">Buat</a>
-            </div>
-        </div>
+    <div class="card mb-4 mt-1">
+
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-sm table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead class="bg-primary text-white">
+                    <thead class="thead-light">
                         <tr>
-                            <th>#</th>
-                            <th>Kode</th>
+                            <th width="50px">#</th>
+                            <th width="75px">Kode</th>
                             <th>Produk</th>
                             <th>Dos</th>
                             <th>Bks</th>
@@ -99,26 +104,26 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Data Sales</h5>
+                <h5 class="modal-title"><img src="<?= base_url('assets/img/icon/user.png'); ?>" alt=""> Data Sales</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-bordered table-sm" id="table-sales">
-                    <thead>
+                <table class="table table-sm" id="table-sales">
+                    <!-- <thead>
                         <th>#</th>
                         <th>Sales</th>
                         <th></th>
-                    </thead>
+                    </thead> -->
                     <tbody>
                         <?php
                         $no = 1;
                         foreach ($sales as $s) : ?>
                             <tr>
-                                <td><?= $no++; ?></td>
+                                <td width="50px"><?= $no++; ?></td>
                                 <td><?= $s['nama_sales']; ?></td>
-                                <td><a href="javascript:;" class="item-sales" data-id="<?= $s['id']; ?>" data-nama="<?= $s['nama_sales']; ?>">Pilih</a></td>
+                                <td class="text-right"><a href="javascript:;" class="item-sales text-success" data-id="<?= $s['id']; ?>" data-nama="<?= $s['nama_sales']; ?>"><i class="fas fa-check"></i> Pilih</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="<?= base_url('admin'); ?>">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -54,11 +54,11 @@
             <span>List Stok Awal</span></a>
     </li>
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="<?= base_url('stok_akhir'); ?>">
             <i class="fas fa-fw fa-edit"></i>
             <span>Stok Akhir</span></a>
-    </li>
+    </li> -->
     <li class="nav-item">
         <a class="nav-link" href="<?= base_url('penjualan'); ?>">
             <i class="fas fa-fw fa-edit"></i>

@@ -12,6 +12,7 @@ class Stok_akhir extends CI_Controller
     }
     public function index()
     {
+        $this->load->model('m_security');
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['sales'] = $this->stok->data_sales()->result_array();
         $this->load->view('template/header', $data);
@@ -25,6 +26,7 @@ class Stok_akhir extends CI_Controller
 
     public function get_stok()
     {
+        $this->load->model('m_security');
         $msg['success'] = false;
         $id_sales = $this->input->get('id');
         $status = 'Pending';

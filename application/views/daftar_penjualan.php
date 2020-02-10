@@ -32,7 +32,7 @@
                                 <td class="text-right"><?= number_format($p['jumlah'], 0, ',', '.'); ?></td>
                                 <td class="text-center">
                                     <a href="<?= base_url('stok_akhir/penjualan/'); ?><?= $p['nomor_transaksi']; ?>" class="mr-2 item-print" target="blank"><i class="fas fa-print text-info"></i></a>
-                                    <a href="javascript:;" class="item-edit" data-id="<?= $p['id_pj']; ?>" data-nomor="<?= $p['nomor_transaksi']; ?>"><i class="fas fa-pencil-alt text-success"></i></a>
+                                    <!-- <a href="javascript:;" class="item-edit" data-id="<?= $p['id_pj']; ?>" data-nomor="<?= $p['nomor_transaksi']; ?>"><i class="fas fa-pencil-alt text-success"></i></a> -->
                                 </td>
                             </tr>
                         <?php endforeach; ?>

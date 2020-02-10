@@ -12,6 +12,8 @@ class Stok extends CI_Controller
     }
     public function index()
     {
+        $this->load->model('m_security');
+        $this->m_security->getsecurity();
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['produk'] = $this->stok->get_all()->result_array();
 
@@ -31,7 +33,8 @@ class Stok extends CI_Controller
 
     public function list_awl()
     {
-
+        $this->load->model('m_security');
+        $this->m_security->getsecurity();
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['awl'] = $this->stok->get_stokAwal()->result_array();
         $this->load->view('template/header', $data);
@@ -138,9 +141,9 @@ class Stok extends CI_Controller
                 <td>' . $no++ . '</td>
                 <td>' . $t['kode_produk'] . '</td>
                 <td>' . $t['nama_produk'] . '</td>
-                <td>' . $dos . '</td>
-                <td>' . $bks . '</td>
-                <td><a href="javascript:;" class="item-edit" data-id="' . $t['id_detil'] . '" data-banding="' . $t['banding'] . '"  data-dos="' . $dos . '" data-bks="' . $bks . '"><i class="fas fa-edit"></i></a></td>
+                <td class="bg-light text-center">' . $dos . '</td>
+                <td class="bg-light text-center">' . $bks . '</td>
+                <td class="text-center"><a href="javascript:;" class="item-edit text-success" data-id="' . $t['id_detil'] . '" data-banding="' . $t['banding'] . '"  data-dos="' . $dos . '" data-bks="' . $bks . '"><i class="fas fa-edit"></i></a></td>
                 </tr>
                 
                 
@@ -170,6 +173,8 @@ class Stok extends CI_Controller
 
     public function ubah($nomor)
     {
+        $this->load->model('m_security');
+        $this->m_security->getsecurity();
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['nomor'] = $this->stok->get_penjualan($nomor)->row_array();
         $this->load->view('template/header', $data);

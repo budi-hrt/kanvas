@@ -18,3 +18,7 @@
 	border: 1px solid #E2B709;
 	background-color: #FFE57E;
 }
+
+.border-top {
+	border-top: 3px solid #4E73DF !important;
+}
