@@ -9,7 +9,7 @@
             <ul class="list-group ">
                 <li class="list-group-item p-1 pl-4 text-primary "><b> Nomor Stok : <?= $nomor['nomor_transaksi']; ?></b></li>
                 <li class="list-group-item p-1 pl-4"> Tanggal Stok : <?= date('d-m-Y', strtotime($nomor['tanggal'])); ?></li>
-                <li class="list-group-item p-1 pl-4 pr-4 d-flex justify-content-between align-items-center"> Nama Sales : <?= $nomor['nama_sales']; ?> <span>Daerah : </span></li>
+                <li class="list-group-item p-1 pl-4 pr-4 d-flex justify-content-between align-items-center"> Nama Sales : <?= $nomor['nama_sales']; ?> <span>Daerah : <?= $nomor['nama_area']; ?></span></li>
             </ul>
 
 
