@@ -1,3 +1,13 @@
+@font-face {
+	font-family: 'Roboto';
+	src: url('../font/Roboto-Light.ttf');
+}
+
+body {
+	font-family: 'Roboto', 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+
 .btn-produk {
 	width: 120px;
 	height: 80px;
@@ -21,4 +31,32 @@
 
 .border-top {
 	border-top: 3px solid #4E73DF !important;
+}
+
+
+table.laporan tr td {
+	font-size: 14px !important;
+
+}
+
+.laporan>thead>tr>th,
+.laporan>tbody>tr>th,
+.laporan>tfoot>tr>th,
+.laporan>thead>tr>td,
+.laporan>tbody>tr>td,
+.laporan>tfoot>tr>td {
+	padding: 1px;
+}
+
+.bg-brown {
+	background: #84817a;
+	color: #fff;
+}
+
+.bg-yelow {
+	background: #ffda79;
+}
+
+.bg-swan-white {
+	background: #f7f1e3;
 }

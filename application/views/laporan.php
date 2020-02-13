@@ -38,17 +38,15 @@
     </div>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">List Sales</h6>
-        </div>
+
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-sm table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead class="bg-primary text-white">
+                <table class="table table-sm  laporan" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="bg-brown">
                         <tr>
-                            <th>Tanggal</th>
-                            <th>Produk</th>
-                            <th>terjual</th>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Nama Produk</th>
+                            <th class="text-center">Omset</th>
                             <th>Total</th>
                         </tr>
                     </thead>
