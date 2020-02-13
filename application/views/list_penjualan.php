@@ -21,7 +21,7 @@ foreach ($data as $r) : ?>
 
     $terjual = $r['awal'] - $r['akhir'];
 
-    $total = $terjual * $r['harga'];
+    $total = $terjual * $r['harga_produk'];
     $banding = $r['banding'];
     if ($r['awal'] >= $banding) {
         $dos = floor($r['awal'] / $banding);

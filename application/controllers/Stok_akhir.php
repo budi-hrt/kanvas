@@ -13,6 +13,7 @@ class Stok_akhir extends CI_Controller
     public function index()
     {
         $this->load->model('m_security');
+        $this->m_security->getsecurity();
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['sales'] = $this->stok->data_sales()->result_array();
         $this->load->view('template/header', $data);
@@ -26,7 +27,7 @@ class Stok_akhir extends CI_Controller
 
     public function get_stok()
     {
-        $this->load->model('m_security');
+
         $msg['success'] = false;
         $id_sales = $this->input->get('id');
         $status = 'Pending';
@@ -94,7 +95,7 @@ class Stok_akhir extends CI_Controller
     public function tampil_stok()
     {
         $nomor = $this->input->get('nomor');
-        $this->db->select('t.id as id_detil,t.awal,t.akhir,t.kode_produk,p.nama_produk,p.banding,p.harga');
+        $this->db->select('t.id as id_detil,t.awal,t.akhir,t.kode_produk,p.nama_produk,p.banding,t.harga_produk');
         $this->db->from('transaksi t');
         $this->db->join('produk p', 'p.kode=t.kode_produk', 'left');
         $this->db->where('t.nomor_stok', $nomor);
@@ -117,7 +118,7 @@ class Stok_akhir extends CI_Controller
         if ($data->num_rows() > 1) {
             foreach ($data->result_array() as $r) {
                 $terjual = $r['awal'] - $r['akhir'];
-                $total = $terjual * $r['harga'];
+                $total = $terjual * $r['harga_produk'];
                 $banding = $r['banding'];
                 if ($r['awal'] >= $banding) {
                     $dos = floor($r['awal'] / $banding);
@@ -183,7 +184,8 @@ class Stok_akhir extends CI_Controller
 
     public function penjualan($nomor)
     {
-
+        $this->load->model('m_security');
+        $this->m_security->getsecurity();
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
 
         $data['nomor'] = $this->stok->get_penjualan($nomor)->row_array();
@@ -196,7 +198,7 @@ class Stok_akhir extends CI_Controller
     public function tampil_penjualan()
     {
         $nomor = $this->input->get('nomor');
-        $this->db->select('t.id as id_detil,t.awal,t.akhir,t.kode_produk,p.nama_produk,p.banding,p.harga');
+        $this->db->select('t.id as id_detil,t.awal,t.akhir,t.kode_produk,p.nama_produk,p.banding,t.harga_produk');
         $this->db->from('transaksi t');
         $this->db->join('produk p', 'p.kode=t.kode_produk', 'left');
         $this->db->where('t.nomor_stok', $nomor);

@@ -86,6 +86,7 @@
         foreach ($produk as $p) : ?>
             <tr>
                 <input type="hidden" class="kode" value="<?= $p['kode']; ?>">
+                <input type="hidden" class="harga" value="<?= $p['harga']; ?>">
                 <td width="150px"><?= $p['kode']; ?></td>
                 <td width="150px"><?= $p['nama_produk']; ?></td>
             </tr>
@@ -257,6 +258,10 @@
         $('.kode').each(function() {
             kode.push($(this).val());
         });
+        const harga = [];
+        $('.harga').each(function() {
+            harga.push($(this).val());
+        });
 
         const nomor = $('#nomor').val();
         const tanggal = $('#tanggal').val();
@@ -267,6 +272,7 @@
             data: {
                 nomor: nomor,
                 kode: kode,
+                harga: harga,
                 tanggal: tanggal,
                 id_sales: id_sales
             }

@@ -64,10 +64,30 @@
             <i class="fas fa-fw fa-edit"></i>
             <span>List Penjualan</span></a>
     </li>
+
+
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item ">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Laporan</span>
+        </a>
+        <div id="collapseTwo" class="collapse " aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Pilih Jenis Laporan:</h6>
+                <a class="collapse-item" href="<?= base_url('laporan'); ?>">Rincian Per Daerah</a>
+                <a class="collapse-item" href="laporan/total_daerah">Total Per Daerah </a>
+                <a class="collapse-item" href="laporan/total_team">Total Per Team </a>
+            </div>
+        </div>
+    </li>
+
+
     <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('laporan'); ?>">
+        <a class="nav-link" href="<?= base_url('produk/update_harga'); ?>">
             <i class="fas fa-fw fa-edit"></i>
-            <span>laporan</span></a>
+            <span>update Harga</span></a>
     </li>
 
     <!-- Divider -->

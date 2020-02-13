@@ -46,8 +46,8 @@
                         <tr>
                             <th class="text-center">#</th>
                             <th class="text-center">Nama Produk</th>
-                            <th class="text-center">Omset</th>
-                            <th class="text-right">Total</th>
+                            <th class="text-center" colspan="3">Omset</th>
+                            <th class="text-right pr-5">Total</th>
                         </tr>
                     </thead>
                     <tbody id="tampil">
@@ -83,7 +83,7 @@
         } else {
             $.ajax({
                 type: 'get',
-                url: base_url + 'laporan/cari_laporan',
+                url: base_url + 'laporan/lap_ttldaerah',
                 data: {
                     tgl_awal: tgl_awal,
                     tgl_akhir: tgl_akhir,

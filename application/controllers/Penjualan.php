@@ -13,6 +13,7 @@ class Penjualan extends CI_Controller
     public function index()
     {
         $this->load->model('m_security');
+        $this->m_security->getsecurity();
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['penjualan'] = $this->penjualan->get_penjualan()->result_array();
         $this->load->view('template/header', $data);
@@ -25,6 +26,7 @@ class Penjualan extends CI_Controller
     public function get($nomor)
     {
         $this->load->model('m_security');
+        $this->m_security->getsecurity();
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['penjualan'] = $this->penjualan->get_edit($nomor)->row_array();
         $this->load->view('template/header', $data);
@@ -38,7 +40,7 @@ class Penjualan extends CI_Controller
     {
 
         $nomor = $this->input->get('nomor');
-        $this->db->select('t.id as id_detil,t.awal,t.akhir,t.kode_produk,p.nama_produk,p.banding,p.harga');
+        $this->db->select('t.id as id_detil,t.awal,t.akhir,t.kode_produk,p.nama_produk,p.banding,t.harga_produk');
         $this->db->from('transaksi t');
         $this->db->join('produk p', 'p.kode=t.kode_produk', 'left');
         $this->db->where('t.nomor_stok', $nomor);

@@ -70,6 +70,7 @@ class Stok extends CI_Controller
     {
         $nomor = $_POST['nomor'];
         $kode_produk = $_POST['kode'];
+        $harga_produk = $_POST['harga'];
         $tanggal = date('Y-m-d', strtotime($_POST['tanggal']));
         $id_sales = $_POST['id_sales'];
         $data = array();
@@ -77,7 +78,8 @@ class Stok extends CI_Controller
         foreach ($kode_produk as $k) { // Kita buat perulangan berdasarkan nis sampai data terakhir
             array_push($data, array(
                 'nomor_stok' => $nomor,
-                'kode_produk' => $k,  // Ambil dan set data nama sesuai index array dari $index
+                'kode_produk' => $k,
+                'harga_produk' => $harga_produk[$index],  // Ambil dan set data nama sesuai index array dari $index
                 'tanggal_awal' => $tanggal,  // Ambil dan set data alamat sesuai index array dari $index
                 'id_sales' => $id_sales  // Ambil dan set data telepon sesuai index array dari $index
             ));
