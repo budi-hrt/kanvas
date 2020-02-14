@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Laporan extends CI_Controller
+class Laporan_team extends CI_Controller
 {
     public function __construct()
     {
@@ -14,19 +14,19 @@ class Laporan extends CI_Controller
         $this->load->model('m_security');
         $this->m_security->getsecurity();
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['area'] = $this->laporan->get_area()->result_array();
+        $data['team'] = $this->laporan->get_team()->result_array();
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar');
         $this->load->view('template/topbar', $data);
-        $this->load->view('laporan', $data);
+        $this->load->view('lap-ttlteam', $data);
     }
 
-    public function cari_laporan()
+    public function rincian_team()
     {
-        $area = $this->input->get('area');
+        $team = $this->input->get('team');
         $tgl_awal = date('Y-m-d', strtotime($this->input->get('tgl_awal')));
         $tgl_akhir = date('Y-m-d', strtotime($this->input->get('tgl_akhir')));
-        $data = $this->laporan->get_penjualan($area, $tgl_awal, $tgl_akhir);
+        $data = $this->laporan->get_ttlPenjualanTeam($team, $tgl_awal, $tgl_akhir);
         $total = 0;
         $terjual = 0;
         $total = 0;
@@ -44,34 +44,34 @@ class Laporan extends CI_Controller
         if ($data->num_rows() > 0) {
             foreach ($data->result_array() as $p) {
                 echo '<tr>
-                <td colspan="2" class="bg-swan-white "><b> Tanggal : ' . date('d F Y', strtotime($p['tanggal'])) . '</b> </td>
-             <td colspan="2" class="bg-swan-white text-right pr-3 text-primary"><b>' . $p['nama_sales'] . '</b></td>
+                <td colspan="2" class="bg-swan-white "><b> Area Kanvas : ' . $p['nama_area'] . '</b> </td>
+            //  <td colspan="2" class="bg-swan-white text-right pr-3 text-primary"><b></b></td>
              </tr>';
-                $nomor = $p['nomor_transaksi'];
-                $omset = $this->laporan->get_stok($nomor, $area, $tgl_akhir, $tgl_awal)->result_array();
+                $area = $p['kode_area'];
+                $omset = $this->laporan->get_sumStok($area, $tgl_akhir, $tgl_awal)->result_array();
 
                 $no = 1;
 
                 foreach ($omset as $r) {
-                    $terjual = $r['awal'] - $r['akhir'];
+                    $terjual = $r['stkawal'] - $r['stkakhir'];
                     $total = $terjual * $r['harga_produk'];
                     $banding = $r['banding'];
-                    if ($r['awal'] >= $banding) {
-                        $dos = floor($r['awal'] / $banding);
+                    if ($r['stkawal'] >= $banding) {
+                        $dos = floor($r['stkawal'] / $banding);
                         $res = $banding * $dos;
-                        $bks = $r['awal'] - $res;
+                        $bks = $r['stkawal'] - $res;
                     } else {
                         $dos = 0;
-                        $bks = $r['awal'];
+                        $bks = $r['stkawal'];
                     }
 
-                    if ($r['akhir'] >= $banding) {
-                        $ados = floor($r['akhir'] / $banding);
+                    if ($r['stkakhir'] >= $banding) {
+                        $ados = floor($r['stkakhir'] / $banding);
                         $ares = $banding * $ados;
-                        $abks = $r['akhir'] - $ares;
+                        $abks = $r['stkakhir'] - $ares;
                     } else {
                         $ados = 0;
-                        $abks = $r['akhir'];
+                        $abks = $r['stkakhir'];
                     }
                     if ($terjual >= $banding) {
                         $tdos = floor($terjual / $banding);
@@ -87,7 +87,7 @@ class Laporan extends CI_Controller
 
 
                     echo '  <tr>';
-                    if ($r['awal'] == 0 && $r['akhir'] == 0) {
+                    if ($r['stkawal'] == 0 && $r['stkakhir'] == 0) {
                         echo '
                     <td  style="display: none"">' . $no++ . '</td>
                     <td  style="display: none">' . $r['nama_produk'] . '</td>
@@ -120,25 +120,13 @@ class Laporan extends CI_Controller
     }
 
 
-    public function total_daerah()
-    {
-        $this->load->model('m_security');
-        $this->m_security->getsecurity();
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['area'] = $this->laporan->get_area()->result_array();
-        $this->load->view('template/header', $data);
-        $this->load->view('template/sidebar');
-        $this->load->view('template/topbar', $data);
-        $this->load->view('laporan-ttldaerah', $data);
-    }
-
-    public function lap_ttlDaerah()
+    public function lap_ttlTeam()
     {
 
-        $area = $this->input->get('area');
+        $team = $this->input->get('team');
         $tgl_awal = date('Y-m-d', strtotime($this->input->get('tgl_awal')));
         $tgl_akhir = date('Y-m-d', strtotime($this->input->get('tgl_akhir')));
-        $data = $this->laporan->get_ttlPenjualan($area, $tgl_awal, $tgl_akhir);
+        $data = $this->laporan->get_ttlPenjualanTeam($team, $tgl_awal, $tgl_akhir);
         $total = 0;
         $terjual = 0;
         $total = 0;
@@ -154,7 +142,7 @@ class Laporan extends CI_Controller
         $tbks = 0;
         $tres = 0;
         if ($data->num_rows() > 0) {
-            $omset = $this->laporan->get_sumStok($area, $tgl_akhir, $tgl_awal)->result_array();
+            $omset = $this->laporan->get_sumStokTeam($team, $tgl_akhir, $tgl_awal)->result_array();
             $no = 1;
 
             foreach ($omset as $r) {

@@ -77,18 +77,18 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Pilih Jenis Laporan:</h6>
                 <a class="collapse-item" href="<?= base_url('laporan'); ?>">Rincian Per Daerah</a>
-                <a class="collapse-item" href="laporan/total_daerah">Total Per Daerah </a>
-                <a class="collapse-item" href="laporan/total_team">Total Per Team </a>
+                <a class="collapse-item" href="<?= base_url('laporan/total_daerah'); ?>">Total Per Daerah </a>
+                <a class="collapse-item" href="<?= base_url('laporan_team"'); ?>>Total Per Team </a>
             </div>
         </div>
     </li>
 
 
-    <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('produk/update_harga'); ?>">
-            <i class="fas fa-fw fa-edit"></i>
-            <span>update Harga</span></a>
-    </li>
+    <!-- <li class=" nav-item">
+                    <a class="nav-link" href="<?= base_url('produk/update_harga'); ?>">
+                        <i class="fas fa-fw fa-edit"></i>
+                        <span>update Harga</span></a>
+    </li> -->
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

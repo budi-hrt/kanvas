@@ -60,3 +60,13 @@ table.laporan tr td {
 .bg-swan-white {
 	background: #f7f1e3;
 }
+
+.bg-green {
+	background: #218c74;
+	color: #fff;
+}
+
+.bg-purple {
+	background: #706fd3;
+	color: #fff;
+}
