@@ -83,6 +83,7 @@ class Laporan_model extends CI_model
         $this->db->where('p.tanggal<=', $tgl_akhir);
         $this->db->where('p.kode_pstarea', $team);
         $this->db->group_by('p.kode_area');
+        $this->db->group_by('p.id_sales');
         $query = $this->db->get('penjualan p');
         return $query;
     }
@@ -101,7 +102,19 @@ class Laporan_model extends CI_model
     }
 
 
-
+    public function get_sumStokSales($area, $tgl_akhir, $tgl_awal, $sales)
+    {
+        $this->db->select('SUM(t.awal) as stkawal,SUM(t.akhir) as stkakhir,t.harga_produk,p.banding,p.nama_produk,t.kode_produk');
+        $this->db->from('transaksi t');
+        $this->db->join('produk p', 'p.kode=t.kode_produk', 'left');
+        $this->db->where('t.tanggal_stok >=', $tgl_awal);
+        $this->db->where('t.tanggal_stok <=', $tgl_akhir);
+        $this->db->where('t.kode_area', $area);
+        $this->db->where('t.id_sales', $sales);
+        $this->db->group_by('t.kode_produk');
+        $query = $this->db->get();
+        return $query;
+    }
 
 
     // Akhir Laporan team
