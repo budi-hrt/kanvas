@@ -73,12 +73,12 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-sm  laporan" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-sm table-bordered table-striped table-hover  laporan" width="100%" cellspacing="0">
                     <thead class="bg-brown">
                         <tr>
                             <th class="text-center">#</th>
                             <th class="text-center">Nama Produk</th>
-                            <th class="text-center">Omset</th>
+                            <th class="text-center" colspan="2">Omset</th>
                             <th class="text-right">Total</th>
                         </tr>
                     </thead>

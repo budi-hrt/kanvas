@@ -70,3 +70,15 @@ table.laporan tr td {
 	background: #706fd3;
 	color: #fff;
 }
+
+.bg-abu {
+	background: #bdc3c7;
+	color: #fff;
+}
+
+
+
+.table-hover tbody tr:hover td {
+	background-color: rgb(123, 237, 159, 0.2);
+	color: rgb(47, 53, 66);
+}

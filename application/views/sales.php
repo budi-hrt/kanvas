@@ -12,7 +12,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-sm table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead class="bg-primary text-white">
+                    <thead>
                         <tr>
                             <th>#</th>
                             <th>Kode</th>

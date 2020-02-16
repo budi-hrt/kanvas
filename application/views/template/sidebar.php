@@ -78,7 +78,8 @@
                 <h6 class="collapse-header">Pilih Jenis Laporan:</h6>
                 <a class="collapse-item" href="<?= base_url('laporan'); ?>">Rincian Per Daerah</a>
                 <a class="collapse-item" href="<?= base_url('laporan/total_daerah'); ?>">Total Per Daerah </a>
-                <a class="collapse-item" href="<?= base_url('laporan_team"'); ?>>Total Per Team </a>
+                <a class="collapse-item" href="<?= base_url('laporan_team'); ?>">Total Per Team </a>
+                <a class="collapse-item" href="<?= base_url('laporan_sales'); ?>">Laporan Per Sales </a>
             </div>
         </div>
     </li>

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Laporan_team extends CI_Controller
+class Laporan_sales extends CI_Controller
 {
     public function __construct()
     {
@@ -14,19 +14,19 @@ class Laporan_team extends CI_Controller
         $this->load->model('m_security');
         $this->m_security->getsecurity();
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['team'] = $this->laporan->get_team()->result_array();
+        $data['sales'] = $this->laporan->get_sales()->result_array();
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar');
         $this->load->view('template/topbar', $data);
-        $this->load->view('lap-ttlteam', $data);
+        $this->load->view('lap-sales', $data);
     }
 
-    public function rincian_team()
+    public function rincian_sales()
     {
-        $team = $this->input->get('team');
+        $sales = $this->input->get('sales');
         $tgl_awal = date('Y-m-d', strtotime($this->input->get('tgl_awal')));
         $tgl_akhir = date('Y-m-d', strtotime($this->input->get('tgl_akhir')));
-        $data = $this->laporan->get_ttlPenjualanTeam($team, $tgl_awal, $tgl_akhir);
+        $data = $this->laporan->get_ttlPenjualanSales($sales, $tgl_awal, $tgl_akhir);
         $total = 0;
         $terjual = 0;
         $total = 0;
@@ -47,34 +47,34 @@ class Laporan_team extends CI_Controller
             foreach ($data->result_array() as $p) {
                 echo '<tr>
                 <td colspan="2" class="bg-swan-white "><b> Area Kanvas : ' . $p['nama_area'] . '</b> </td>
-            //  <td colspan="3" class="bg-swan-white text-right pr-3 text-primary"><b>' . $p['nama_sales'] . '</b></td>
+            //  <td colspan="3" class="bg-swan-white text-right pr-3 text-primary"><b>' . date('d F Y', strtotime($p['tanggal'])) . '</b></td>
              </tr>';
                 $area = $p['kode_area'];
-                $sales = $p['id_sales'];
-                $omset = $this->laporan->get_sumStokSales($area, $tgl_akhir, $tgl_awal, $sales)->result_array();
+                $nomor = $p['nomor_transaksi'];
+                $omset = $this->laporan->get_stok($nomor, $area, $tgl_akhir, $tgl_awal)->result_array();
 
                 $no = 1;
 
                 foreach ($omset as $r) {
-                    $terjual = $r['stkawal'] - $r['stkakhir'];
+                    $terjual = $r['awal'] - $r['akhir'];
                     $total = $terjual * $r['harga_produk'];
                     $banding = $r['banding'];
-                    if ($r['stkawal'] >= $banding) {
-                        $dos = floor($r['stkawal'] / $banding);
+                    if ($r['awal'] >= $banding) {
+                        $dos = floor($r['awal'] / $banding);
                         $res = $banding * $dos;
-                        $bks = $r['stkawal'] - $res;
+                        $bks = $r['awal'] - $res;
                     } else {
                         $dos = 0;
-                        $bks = $r['stkawal'];
+                        $bks = $r['awal'];
                     }
 
-                    if ($r['stkakhir'] >= $banding) {
-                        $ados = floor($r['stkakhir'] / $banding);
+                    if ($r['akhir'] >= $banding) {
+                        $ados = floor($r['akhir'] / $banding);
                         $ares = $banding * $ados;
-                        $abks = $r['stkakhir'] - $ares;
+                        $abks = $r['akhir'] - $ares;
                     } else {
                         $ados = 0;
-                        $abks = $r['stkakhir'];
+                        $abks = $r['akhir'];
                     }
                     if ($terjual >= $banding) {
                         $tdos = floor($terjual / $banding);
@@ -90,7 +90,7 @@ class Laporan_team extends CI_Controller
 
 
                     echo '  <tr>';
-                    if ($r['stkawal'] == 0 && $r['stkakhir'] == 0) {
+                    if ($r['awal'] == 0 && $r['akhir'] == 0) {
                         echo '
                     <td  style="display: none"">' . $no++ . '</td>
                     <td  style="display: none">' . $r['nama_produk'] . '</td>
@@ -128,13 +128,13 @@ class Laporan_team extends CI_Controller
     }
 
 
-    public function lap_ttlTeam()
+    public function lap_ttlSales()
     {
 
-        $team = $this->input->get('team');
+        $sales = $this->input->get('sales');
         $tgl_awal = date('Y-m-d', strtotime($this->input->get('tgl_awal')));
         $tgl_akhir = date('Y-m-d', strtotime($this->input->get('tgl_akhir')));
-        $data = $this->laporan->get_ttlPenjualanTeam($team, $tgl_awal, $tgl_akhir);
+        $data = $this->laporan->get_ttlPenjualanSales($sales, $tgl_awal, $tgl_akhir);
         $total = 0;
         $terjual = 0;
         $total = 0;
@@ -152,9 +152,8 @@ class Laporan_team extends CI_Controller
         $dusttl = 0;
         $bksttl = 0;
         if ($data->num_rows() > 0) {
-            $omset = $this->laporan->get_sumStokTeam($team, $tgl_akhir, $tgl_awal)->result_array();
+            $omset = $this->laporan->get_sumttlStokSales($sales, $tgl_akhir, $tgl_awal)->result_array();
             $no = 1;
-
             foreach ($omset as $r) {
                 $terjual = $r['stkawal'] - $r['stkakhir'];
                 $total = $terjual * $r['harga_produk'];
@@ -223,13 +222,14 @@ class Laporan_team extends CI_Controller
             $n = 1;
             echo '<tr>
             <td colspan="5"> 
-            <b>Kontribusi Oleh :</b><br>
+            <b>Area Kanvas :</b><br>
             ';
-            foreach ($data->result_array() as $p) {
+            $daerah =  $this->laporan->get_daerah($sales, $tgl_awal, $tgl_akhir)->result_array();
+            foreach ($daerah as $p) {
                 echo '
                
                 <span class="ml-3"><b>' . $n++ . '.</b>
-                <b>' . $p['nama_sales'] . '</b> <i class="far fa-star text-warning"></i> <i class="far fa-star text-warning"></i> <i class="far fa-star text-warning"></i><br></span>
+                <b>' . $p['nama_area'] . '</b> <i class="far fa-star text-warning"></i> <i class="far fa-star text-warning"></i> <i class="far fa-star text-warning"></i><br></span>
 
                ';
             }

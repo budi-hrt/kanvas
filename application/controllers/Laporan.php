@@ -41,10 +41,12 @@ class Laporan extends CI_Controller
         $tdos = 0;
         $tbks = 0;
         $tres = 0;
+        $dusttl = 0;
+        $bksttl = 0;
         if ($data->num_rows() > 0) {
             foreach ($data->result_array() as $p) {
                 echo '<tr>
-                <td colspan="2" class="bg-swan-white "><b> Tanggal : ' . date('d F Y', strtotime($p['tanggal'])) . '</b> </td>
+                <td colspan="3" class="bg-swan-white "><b> Tanggal : ' . date('d F Y', strtotime($p['tanggal'])) . '</b> </td>
              <td colspan="2" class="bg-swan-white text-right pr-3 text-primary"><b>' . $p['nama_sales'] . '</b></td>
              </tr>';
                 $nomor = $p['nomor_transaksi'];
@@ -98,19 +100,23 @@ class Laporan extends CI_Controller
                         echo '
                         <td class="text-center">' . $no++ . '</td>
                         <td>' . $r['nama_produk'] . '</td>
-                      
-                        <td class="text-center">' . $tdos . ' / ' . $tbks . '</td>
+                        <td class="text-center" width="50px">' . $tdos . '</td>
+                        <td class="text-center" width="50px">' . $tbks . '</td>
                         <td class="text-right">' . number_format($total, 0, ',', '.') . '</td>
                         ';
                         $subttl += $total;
+                        $dusttl += $tdos;
+                        $bksttl += $tbks;
                     }
 
                     echo '</tr>';
                 }
                 echo '
                 <tr>
-                <td colspan="3" class="text-right pr-5"><b> SUBTOTAL : ....</b></td>
-                <td class="bg-yelow pl-1"><b> ' . number_format($subttl, 0, ',', '.') . '</b></td>
+                <td colspan="2" class="text-right pr-5 bg-abu"><b> SUBTOTAL : ....</b></td>
+                <td class="text-center bg-abu " width="50px"><b>' . $dusttl . '</b></td>
+                <td class="text-center bg-abu " width="50px"><b> ' . $bksttl . '</b></td>
+                <td class="bg-yelow pl-1 text-right"><b> ' . number_format($subttl, 0, ',', '.') . '</b></td>
                 </tr>';
                 $subttl = 0;
             }
@@ -153,6 +159,8 @@ class Laporan extends CI_Controller
         $tdos = 0;
         $tbks = 0;
         $tres = 0;
+        $dusttl = 0;
+        $bksttl = 0;
         if ($data->num_rows() > 0) {
             $omset = $this->laporan->get_sumStok($area, $tgl_akhir, $tgl_awal)->result_array();
             $no = 1;
@@ -200,37 +208,39 @@ class Laporan extends CI_Controller
                     <td class="text-center">' . $no++ . '</td>
                     <td>' . $r['nama_produk'] . '</td>
                   
-                    <td class="text-right" width="5px">' . $tdos . '</td>
-                    <td class="text-center" width="5px"> /  </td>
-                    <td class="text-left" width="5px"> ' . $tbks . '</td>
+                    <td class="text-center" width="50px">' . $tdos . '</td>
+                    <td class="text-center" width="50px">' . $tbks . '</td>
                     <td class="text-right">' . number_format($total, 0, ',', '.') . '</td>
                     ';
                     $subttl += $total;
+                    $dusttl += $tdos;
+                    $bksttl += $tbks;
                 }
 
                 echo '</tr>';
             }
             echo '
             <tr>
-            <td colspan="5"></td>
-            <td class="bg-yelow pl-1"><b> ' . number_format($subttl, 0, ',', '.') . '</b></td>
+            <td colspan="2" class="text-right pr-5 bg-abu" height="30px"><b> SUBTOTAL : ....</b></td>
+                <td class="text-center bg-abu " width="50px"><b>' . $dusttl . '</b></td>
+                <td class="text-center bg-abu " width="50px"><b> ' . $bksttl . '</b></td>
+            <td class="bg-yelow pl-1 text-right"><b> ' . number_format($subttl, 0, ',', '.') . '</b></td>
             </tr>';
             $subttl = 0;
 
 
             echo '
         <tr>
-        <td colspan="2"><b>Kontribusi Oleh :</b></td>
-        </tr>';
+        <td colspan="5" class="pl-3"><b>Kontribusi Oleh :</b><br>
+        ';
             $n = 1;
             foreach ($data->result_array() as $p) {
                 echo '
-                <tr>
-                <td class="text-center"><b>' . $n++ . '.</b></td>
-                <td><b>' . $p['nama_sales'] . '</b> <i class="far fa-star text-warning"></i> <i class="far fa-star text-warning"></i> <i class="far fa-star text-warning"></i></td>
-
-                </tr>';
+             
+                <span class="ml-3"><b>' . $n++ . '.</b> <b>' . $p['nama_sales'] . '</b> <i class="far fa-star text-warning"></i> <i class="far fa-star text-warning"></i> <i class="far fa-star text-warning"></i></span><br>
+                ';
             }
+            echo '</td></tr>';
         } else {
             echo '<h3> Laporan Tidak ditemukan</h3>';
         }

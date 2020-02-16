@@ -21,35 +21,33 @@
         </div>
         <div class="col-md-4 mr-3">
             <div class="form-group row">
-                <label for="tgl_akhir" class="col-sm-4 col-form-label">Area Kanvas</label>
+                <label for="sales" class="col-sm-4 col-form-label">Area Kanvas</label>
                 <div class="col-sm-8 ml-n3">
-                    <select name="area" id="area" class="form-control form-control-sm">
-                        <option value="">Pilih Area Kanvas</option>
-                        <?php foreach ($area as $a) : ?>
-                            <option value="<?= $a['kode_area']; ?>"><?= $a['nama_area']; ?></option>
+                    <select name="sales" id="sales" class="form-control form-control-sm">
+                        <option value="">Pilih Sales</option>
+                        <?php foreach ($sales as $s) : ?>
+                            <option value="<?= $s['id']; ?>"><?= $s['nama_sales']; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
             </div>
         </div>
         <div class="col-md-2 ml-n5">
-            <button type="button" class="btn btn-primary btn-sm" id="cari"><i class="fas fa-search"></i> Cari</button>
-            <button type="button" class="btn btn-success btn-sm" id="total" style="display: none">Lihat Total</button>
-
+            <button type="button" class="btn btn-primary btn-sm" id="cari"><i class="fas fa-search"></i> Cari laporan</button>
         </div>
     </div>
     <!-- DataTales Example -->
-    <div class="card shadow mb-4" id="card-rinci">
+    <div class="card shadow mb-4" id="card-total">
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-sm table-bordered table-striped table-hover  laporan " width="100%" cellspacing="0">
-                    <thead class="bg-brown">
+                <table class="table table-sm table-bordered laporan table-striped table-hover" width="100%" cellspacing="0">
+                    <thead class="bg-purple">
                         <tr>
                             <th class="text-center">#</th>
                             <th class="text-center">Nama Produk</th>
                             <th class="text-center" colspan="2">Omset</th>
-                            <th class="text-right">Total</th>
+                            <th class="text-right pr-5">Total</th>
                         </tr>
                     </thead>
                     <tbody id="tampil">
@@ -57,6 +55,11 @@
                     </tbody>
                 </table>
             </div>
+
+
+            <div class="d-flex justify-content-end">
+                <a href="javascript:;" id="lihat-rinci" style="display: none"> Lihat Rincian <i class="fas fa-arrow-right text-primary"></i></a>
+            </div>
         </div>
     </div>
 
@@ -65,14 +68,12 @@
 
 
 
-
-
-    <!-- Card Total -->
-    <div class="card shadow mb-4" id="card-total" style="display: none">
+    <!-- Card Rincian -->
+    <div class="card shadow mb-4" id="card-rinci" style="display: none">
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-sm laporan table-bordered table-striped table-hover  " width="100%" cellspacing="0">
+                <table class="table table-sm table-bordered table-striped table-hover  laporan" width="100%" cellspacing="0">
                     <thead class="bg-brown">
                         <tr>
                             <th class="text-center">#</th>
@@ -81,17 +82,21 @@
                             <th class="text-right">Total</th>
                         </tr>
                     </thead>
-                    <tbody id="tampil_total">
+                    <tbody id="tampil-rinci">
 
                     </tbody>
                 </table>
             </div>
 
+
+
             <div class="d-flex justify-content-end">
-                <a href="javascript:;" id="back-rinci"><i class="fas fa-arrow-left text-primary"></i> Kembali</a>
+                <a href="javascript:;" id="kembali"><i class="fas fa-arrow-left text-primary"> </i> Kembali</a>
             </div>
         </div>
     </div>
+
+
 
 </div>
 <!-- /.container-fluid -->
@@ -112,22 +117,21 @@
     $('#cari').on('click', function() {
         const tgl_awal = $('#tgl_awal').val();
         const tgl_akhir = $('#tgl_akhir').val();
-        const area = $('#area option:selected').attr('value');
-        if (area == '') {
-            alert('area belum dipilih');
+        const sales = $('#sales option:selected').attr('value');
+        if (sales == '') {
+            alert('Sales belum dipilih');
         } else {
             $.ajax({
                 type: 'get',
-                url: base_url + 'laporan/cari_laporan',
+                url: base_url + 'laporan_sales/lap_ttlsales',
                 data: {
                     tgl_awal: tgl_awal,
                     tgl_akhir: tgl_akhir,
-                    area: area
+                    sales: sales
                 },
                 success: function(html) {
                     $('#tampil').html(html);
-                    tampil_total();
-                    $('#total').show().fadeIn();
+                    tampil_rinci();
                 }
             });
 
@@ -135,40 +139,40 @@
     });
 
 
-    function tampil_total() {
+    function tampil_rinci() {
         const tgl_awal = $('#tgl_awal').val();
         const tgl_akhir = $('#tgl_akhir').val();
-        const area = $('#area option:selected').attr('value');
+        const sales = $('#sales option:selected').attr('value');
         $.ajax({
             type: 'get',
-            url: base_url + 'laporan/lap_ttldaerah',
+            url: base_url + 'laporan_sales/rincian_sales',
             data: {
                 tgl_awal: tgl_awal,
                 tgl_akhir: tgl_akhir,
-                area: area
+                sales: sales
             },
             success: function(html) {
-                $('#tampil_total').html(html);
+                $('#tampil-rinci').html(html);
+                $('#lihat-rinci').show('fadeIn');
             }
         });
     }
 
 
-    $('#total').on('click', function() {
 
-        $('#card-rinci').hide('blind', {
+    $('#lihat-rinci').on('click', function() {
+
+        $('#card-total').hide('blind', {
             direction: "vertical"
         }, 300);
-        $('#card-total').show();
-        $('#total').hide()
+        $('#card-rinci').show();
     });
-    $('#back-rinci').on('click', function() {
+    $('#kembali').on('click', function() {
 
-        $('#card-rinci').show('blind', {
+        $('#card-total').show('blind', {
             direction: "vertical"
         }, 300);
-        $('#card-total').hide();
-        $('#total').show()
+        $('#card-rinci').hide();
     });
 </script>
 <?php $this->load->view('template/foothtml'); ?>
