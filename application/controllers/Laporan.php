@@ -119,6 +119,8 @@ class Laporan extends CI_Controller
                 <td class="bg-yelow pl-1 text-right"><b> ' . number_format($subttl, 0, ',', '.') . '</b></td>
                 </tr>';
                 $subttl = 0;
+                $dusttl = 0;
+                $bksttl = 0;
             }
         } else {
             echo '<h3> Laporan Tidak ditemukan</h3>';
