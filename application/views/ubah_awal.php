@@ -189,7 +189,7 @@
         $('#modal-loading').modal('show');
         setTimeout(function() {
             $('#modal-loading').modal('hide');
-            window.location.href = base_url + 'stok/list';
+            window.location.href = base_url + 'stok/list_awl';
         }, 500);
     });
 </script>
