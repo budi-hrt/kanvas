@@ -143,8 +143,8 @@ class Stok extends CI_Controller
                 <td>' . $no++ . '</td>
                 <td>' . $t['kode_produk'] . '</td>
                 <td>' . $t['nama_produk'] . '</td>
-                <td class="bg-light text-center">' . $dos . '</td>
-                <td class="bg-light text-center">' . $bks . '</td>
+                <td class=" text-center text-primary"><b>' . $dos . '</b></td>
+                <td class=" text-center text-primary"><b>' . $bks . '</b></td>
                 <td class="text-center"><a href="javascript:;" class="item-edit text-success" data-id="' . $t['id_detil'] . '" data-banding="' . $t['banding'] . '"  data-dos="' . $dos . '" data-bks="' . $bks . '"><i class="fas fa-edit"></i></a></td>
                 </tr>
                 
