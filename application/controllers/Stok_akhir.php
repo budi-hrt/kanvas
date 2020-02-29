@@ -9,6 +9,7 @@ class Stok_akhir extends CI_Controller
 
 
         $this->load->model('stok_model', 'stok');
+        $this->load->library('tcpdf');
     }
     public function index()
     {
@@ -208,6 +209,7 @@ class Stok_akhir extends CI_Controller
             // foreach ($data->result_array() as $r) {
 
             // }
+
             $dt['data'] = $data->result_array();
             $this->load->view('list_penjualan', $dt);
         } else {
@@ -220,6 +222,27 @@ class Stok_akhir extends CI_Controller
 
 
                 ';
+        }
+    }
+
+
+
+
+    public function pdfpenjualan($nomor)
+    {
+
+        $this->db->select('t.id as id_detil,t.awal,t.akhir,t.kode_produk,p.nama_produk,p.banding,t.harga_produk');
+        $this->db->from('transaksi t');
+        $this->db->join('produk p', 'p.kode=t.kode_produk', 'left');
+        $this->db->where('t.nomor_stok', $nomor);
+        $data = $this->db->get();
+
+        if ($data->num_rows() > 1) {
+            $dt['nomor'] = $this->stok->get_penjualan($nomor)->row_array();
+            $dt['data'] = $data->result_array();
+            $this->load->view('pdf/print_penjualan', $dt);
+        } else {
+            $this->load->view('pdf/erorr_pdf');
         }
     }
 }
