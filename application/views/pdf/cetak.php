@@ -21,15 +21,15 @@ $html = '
 
 <body>
 <htmlpageheader name="myheader">
-<div style="font-weight: bold; font-size: 14pt;text-align: center;"><u>LAPORAN PENJUALAN KANVAS</u></div>
+<div style="font-weight: bold; font-size: 11pt;text-align: center;"><u>LAPORAN PENJUALAN KANVAS</u></div>
 <div style=" font-size: 10pt;text-align: center;">No : ' . $nomor['nomor_transaksi'] . '</div> 
 
 <div style=" font-size: 10pt;text-align: right;">Tanggal : ' . date('d F Y', strtotime($nomor['tanggal'])) . '</div>
 <table width="100%" cellpadding="10"><tr>
 <td width="45%" style="border: 0 solid #888888; ">
 <span style="font-size: 10pt; color: #555555; font-family: sans;">COMPANY :</span><br />
-<span style="font-weight: bold; font-size: 11pt;">PT.Sinar Delima Panen Abadi</span><br />
-Jl.Zebra 1A No.93 - Kota Palu
+<span style="font-weight: bold; font-size: 11pt;color:#EAB543">PT.Sinar Delima Panen Abadi</span><br />
+<span style="color:#718093">Jl.Zebra 1A No.93 - Kota Palu</span>
 </td>
 
 <td width="15%">&nbsp;</td>
@@ -38,12 +38,20 @@ Jl.Zebra 1A No.93 - Kota Palu
 <table class="items" width="100%" style="font-size: 9pt; border-collapse: collapse;" cellpadding="8" >
 <thead>
 <tr>
-<td  width="5%">No.</td>
-<td width="45%">Nama Produk</td>
-<td width="10%">Awal</td>
-<td width="10%">Akhir</td>
-<td width="10%">Terjual</td>
-<td width="20%">Subtotal</td>
+<td rowspan="2"   width="5%">No.</td>
+<td rowspan="2"  width="35%">Nama Produk</td>
+<td colspan="2" width="13%">Awal</td>
+<td colspan="2" width="13%">Akhir</td>
+<td colspan="2" width="15%">Terjual</td>
+<td rowspan="2"   width="20%">Total Penjualan</td>
+</tr>
+<tr>
+<td>Dos</td>
+<td>Bks</td>
+<td>Dos</td>
+<td>Bks</td>
+<td>Dos</td>
+<td>Bks</td>
 </tr>
 </thead>
 <tbody>';
@@ -95,7 +103,7 @@ foreach ($data as $r) {
         $tbks = $terjual;
     }
 
-    $html .= '<tr>';
+    $html .= '<tr class="cld">';
     if ($r['awal'] == 0 && $r['akhir'] == 0) {
         $html .= '
             ';
@@ -103,9 +111,12 @@ foreach ($data as $r) {
         $html .= '
             <td class="list-item" align="center">' . $no++ . '</td>
             <td class="list-item">' . $r['nama_produk'] . '</td>
-            <td class="list-item" align="center">' . $dos . ' / ' . $bks . '</td>
-            <td class="list-item" align="center">' . $ados . ' / ' . $abks . '</td>
-            <td class="list-item" align="center">' . $tdos . ' / ' . $tbks . '</td>
+            <td class="list-item" align="center">' . $dos . '</td>
+            <td class="list-item" align="center">' . $bks . '</td>
+            <td class="list-item" align="center">' . $ados .  '</td>
+            <td class="list-item" align="center">' .  $abks . '</td>
+            <td class="list-item" align="center">' . $tdos . '</td>
+            <td class="list-item" align="center">' . $tbks . '</td>
             <td class="list-item" align="right">' . number_format($total, 0, ',', '.') . '</td>
             ';
     }
@@ -114,27 +125,26 @@ foreach ($data as $r) {
 }
 $html .= '
 <tr>
-    <td class="blanktotal"  rowspan="4" colspan="3" align="left">
-    <span style="font-size: 10pt; color: #555555; font-family: sans;">Rincian Biaya :</span><br />
-    <span style=" font-size: 9pt;">Pengisian BBM ( ..................Ltr ) : .........................</span><br />
-    <span style=" font-size: 9pt;">Uang Makan ( ......hari X .....org ) : .........................</span><br />
-    <span style=" font-size: 9pt;">Penginapan  ( ........hari / malam) : .........................</span><br />
-    <span style=" font-size: 9pt;">Retibusi   : ........</span><br />
-    <span style=" font-size: 9pt;">Biaya Lain -lain ( ..................... )  : .........................</span><br />
-  
-         </td>
-        <td   colspan="2" class="totals">Subtotal:</td>
-<td class="totals sbttl" align="right">' . number_format($subttl, 0, ',', '.') . '</td>
+    <td class="blanktotal1"   colspan="2" align="left"> Biaya BBM ( ............................Ltr )</td>
+    <td class="blanktotal2" colspan="4" align="left">:</td>
+        <td   colspan="2" class="totals"><b>Subtotal </b> :</td>
+<td class="totals sbttl" align="right"><b>' . number_format($subttl, 0, ',', '.') . '</b></td>
 </tr>
 <tr>
+<td class="blanktotal3"   colspan="2" align="left">Uang Makan ( .............Hari X ........Orang )</td>
+    <td class="blanktotal4" colspan="4" align="left">:</td>
     <td colspan="2" class="totals">Total Biaya :</td>
     <td class="totals" align="right">-</td>
 </tr>
 <tr>
+<td class="blanktotal3"   colspan="2" align="left">Biaya Penginapan ( ..................Hari / Malam )</td>
+    <td class="blanktotal4" colspan="4" align="left">:</td>
     <td colspan="2"  class="totals">Transfer :</td>
     <td class="totals" align="right">-</td>
 </tr>
 <tr>
+<td class="blanktotal3"   colspan="2" align="left">Biaya Lain2 ( ..................................................)</td>
+    <td class="blanktotal5" colspan="4" align="left">:</td>
     <td  colspan="2" class="totals">Total Setor :</td>
     <td class="totals" align="right">-</td>
 </tr>

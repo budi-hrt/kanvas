@@ -1,0 +1,95 @@
+@font-face {
+	font-family: "Poppins";
+	src: url('../font/Poppins-Regular.ttf');
+}
+
+body {
+	font-family: sans-serif;
+	font-size: 10pt;
+}
+
+p {
+	margin: 0pt;
+}
+
+table.items {
+	border: 0.1mm solid #000000;
+
+}
+
+td {
+	vertical-align: top;
+}
+
+.items td {
+	border-left: 0.1mm solid #000000;
+	border-right: 0.1mm solid #000000;
+
+}
+
+table thead td {
+	background-color: #EEEEEE;
+	text-align: center;
+	border: 0.1mm solid #000000;
+	font-variant: small-caps;
+	padding: 1mm;
+}
+
+
+.items td.blanktotal {
+	background-color: #EEEEEE;
+	border: 0.1mm solid #000000;
+	background-color: #FFFFFF;
+	border: 0mm none #000000;
+	border-top: 0.1mm solid #000000;
+	border-right: 0.1mm solid #000000;
+}
+
+
+
+.items td.totals {
+	text-align: right;
+	border: 0.1mm solid #000000;
+}
+
+.items td.totals.sbttl {
+	background-color: #EEEEEE;
+}
+
+
+.items td.cost {
+	text-align: "."center;
+}
+
+
+.items td.list-item {
+	padding: 1.5mm;
+	border-bottom: 0.1mm solid rgb(238, 235, 235);
+}
+
+.items td.blanktotal1 {
+	background-color: #ffffff;
+	border-top: 0.1mm solid #000000;
+	border-right: 1mm solid #ffffff !important;
+}
+
+.items td.blanktotal2 {
+	background-color: #ffffff;
+	border-top: 0.1mm solid #000000;
+	border-bottom: 0.1mm solid rgb(238, 235, 235);
+
+}
+
+.items td.blanktotal4 {
+	background-color: #ffffff;
+	border-left: 1mm solid #ffffff;
+	border-bottom: 0.1mm solid rgb(238, 235, 235);
+
+}
+
+.items td.blanktotal5 {
+	background-color: #ffffff;
+	border-left: 1mm solid #ffffff;
+	border-bottom: 0.1mm solid #000000;
+
+}

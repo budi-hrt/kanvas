@@ -1,0 +1,118 @@
+@font-face {
+	font-family: "Poppins";
+	src: url('../font/Poppins-Regular.ttf');
+}
+
+body {
+	font-family: sans-serif;
+	font-size: 10pt;
+}
+
+p {
+	margin: 0pt;
+}
+
+table.items {
+	/* border-bottom: 0.1mm solid #000000; */
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+td {
+	vertical-align: top;
+}
+
+/* .items td {
+	border-left: 0.1mm solid #000000;
+	border-right: 0.1mm solid #000000;
+
+} */
+
+table thead td {
+	background-color: #EEEEEE;
+	text-align: center;
+	border-bottom: 0.1mm solid #EEEEEE;
+	/* font-variant: small-caps; */
+
+}
+
+
+.items td.blanktotal {
+	background-color: #EEEEEE;
+	border: 0.1mm solid #000000;
+	background-color: #FFFFFF;
+	border: 0mm none #000000;
+	border-top: 0.1mm solid #000000;
+	border-right: 0.1mm solid #000000;
+}
+
+
+
+.items td.totals {
+	text-align: right;
+	border: 0.1mm solid #000000;
+}
+
+.items td.totals.sbttl {
+	background-color: #EEEEEE;
+}
+
+
+.items td.cost {
+	text-align: "."center;
+}
+
+
+.items td.list-item {
+	padding: 1.5mm;
+	border-bottom: 0.1mm solid rgb(238, 235, 235);
+}
+
+.items td.list-item2 {
+	padding: 1.5mm;
+	border-top: 0.5mm solid rgb(177, 177, 177);
+	font-size: 14px;
+	color: #2d3436;
+}
+
+.items td.biaya {
+	padding: 1.5mm;
+	font-weight: bold;
+	color: #273c75;
+	font-size: 14px;
+}
+
+.items td.rincian-biaya {
+	padding: 1.5mm;
+
+}
+
+.items td.rincian-biaya-left {
+	padding: 1.5mm;
+	border-bottom: 0.1mm solid rgb(238, 235, 235);
+
+}
+
+.items td.total-biaya {
+	padding: 1.5mm;
+	border-top: 0.2mm solid rgb(202, 199, 199);
+
+}
+
+.items td.total-biaya-left {
+	padding: 1.5mm;
+	border-top: 0.2mm solid rgb(202, 199, 199);
+	border-bottom: 0.1mm solid rgb(238, 235, 235);
+}
+
+.items td.transfer {
+	padding: 1.5mm;
+
+}
+
+
+.ribbon-right {
+	position: absolute;
+	right: 50;
+	top: 0;
+	width: 70px;
+}

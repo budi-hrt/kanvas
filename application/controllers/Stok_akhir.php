@@ -6,10 +6,7 @@ class Stok_akhir extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-
-
         $this->load->model('stok_model', 'stok');
-        $this->load->library('tcpdf');
     }
     public function index()
     {
@@ -240,7 +237,7 @@ class Stok_akhir extends CI_Controller
         if ($data->num_rows() > 1) {
             $dt['nomor'] = $this->stok->get_penjualan($nomor)->row_array();
             $dt['data'] = $data->result_array();
-            $this->load->view('pdf/print_penjualan', $dt);
+            $this->load->view('pdf/cetak2', $dt);
         } else {
             $this->load->view('pdf/erorr_pdf');
         }
