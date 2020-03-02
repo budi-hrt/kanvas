@@ -63,8 +63,10 @@ table thead td {
 
 
 .items td.list-item {
-	padding: 1.5mm;
+	/* padding: 2mm; */
 	border-bottom: 0.1mm solid rgb(238, 235, 235);
+
+
 }
 
 .items td.list-item2 {

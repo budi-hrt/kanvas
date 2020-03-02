@@ -209,6 +209,8 @@ $html .= '
 
 ';
 
+
+
 $mpdf = new \Mpdf\Mpdf();
 $mpdf->WriteHTML($html);
 $mpdf->Output();
