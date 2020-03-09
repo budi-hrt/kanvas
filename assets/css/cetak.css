@@ -1,6 +1,6 @@
 @font-face {
 	font-family: "Poppins";
-	src: url('../font/Poppins-Regular.ttf');
+	src: url("../font/Poppins-Regular.ttf");
 }
 
 body {
@@ -28,24 +28,20 @@ td {
 } */
 
 table thead td {
-	background-color: #EEEEEE;
+	background-color: #eeeeee;
 	text-align: center;
-	border-bottom: 0.1mm solid #EEEEEE;
+	border-bottom: 0.1mm solid #eeeeee;
 	/* font-variant: small-caps; */
-
 }
 
-
 .items td.blanktotal {
-	background-color: #EEEEEE;
+	background-color: #eeeeee;
 	border: 0.1mm solid #000000;
-	background-color: #FFFFFF;
+	background-color: #ffffff;
 	border: 0mm none #000000;
 	border-top: 0.1mm solid #000000;
 	border-right: 0.1mm solid #000000;
 }
-
-
 
 .items td.totals {
 	text-align: right;
@@ -53,20 +49,16 @@ table thead td {
 }
 
 .items td.totals.sbttl {
-	background-color: #EEEEEE;
+	background-color: #eeeeee;
 }
-
 
 .items td.cost {
-	text-align: "."center;
+	text-align: "." center;
 }
-
 
 .items td.list-item {
 	/* padding: 2mm; */
 	border-bottom: 0.1mm solid rgb(238, 235, 235);
-
-
 }
 
 .items td.list-item2 {
@@ -85,36 +77,35 @@ table thead td {
 
 .items td.rincian-biaya {
 	padding: 1.5mm;
-
 }
 
 .items td.rincian-biaya-left {
 	padding: 1.5mm;
-	border-bottom: 0.1mm solid rgb(238, 235, 235);
-
+	border-bottom: 0.1mm solid rgb(201, 200, 200);
 }
 
 .items td.total-biaya {
 	padding: 1.5mm;
-	border-top: 0.2mm solid rgb(202, 199, 199);
-
+	border-top: 0.2mm solid rgb(179, 176, 176);
 }
 
 .items td.total-biaya-left {
 	padding: 1.5mm;
 	border-top: 0.2mm solid rgb(202, 199, 199);
-	border-bottom: 0.1mm solid rgb(238, 235, 235);
+	border-bottom: 0.1mm solid rgb(214, 211, 211);
 }
 
 .items td.transfer {
 	padding: 1.5mm;
-
 }
-
 
 .ribbon-right {
 	position: absolute;
 	right: 50;
 	top: 0;
 	width: 70px;
+}
+
+.items td.list-item2.sbttl {
+	background-color: rgb(245, 244, 244);
 }

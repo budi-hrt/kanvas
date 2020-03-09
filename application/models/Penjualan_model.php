@@ -5,7 +5,7 @@ class Penjualan_model extends CI_model
 {
     public function get_penjualan()
     {
-        $this->db->select('p.id as id_pj, p.tanggal,p.nomor_transaksi,p.jumlah,s.nama_sales');
+        $this->db->select('p.id as id_pj, p.tanggal,p.nomor_transaksi,p.jumlah,s.nama_sales,p.catatan');
         $this->db->from('penjualan p');
         $this->db->join('sales s', 's.id=p.id_sales', 'dsc');
         $this->db->order_by('p.id', 'desc');

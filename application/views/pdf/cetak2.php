@@ -42,7 +42,7 @@ Area Kanvas : ' . $nomor['nama_area'] . '
 
 <td width="25%">&nbsp;</td>
 <td width="30%" style="border: 0 solid #888888;"><span style="font-size: 10pt; color: #555555; font-family: sans;">Tanggal : ' . date('d F Y', strtotime($nomor['tanggal'])) . '</span><br /><span style=" font-size: 10pt;">No : ' . $nomor['nomor_transaksi'] . '</span><br />
-Priode :  </td>
+Minggu Ke :  I / II / III / IV / V</td>
 </tr></table>
 
 
@@ -56,7 +56,7 @@ Priode :  </td>
 <td width="10%">Awal</td>
 <td width="10%">Akhir</td>
 <td width="10%">Terjual</td>
-<td width="20%">Subtotal</td>
+<td width="20%">Total Penjualan</td>
 </tr>
 </thead>
 <tbody>';
@@ -125,14 +125,27 @@ foreach ($data as $r) {
     $html .= '</tr>';
     $subttl += $total;
 }
+$tahun=date('Y');
 $html .= '
 <tr>
-    <td class="list-item2" colspan="5" align="left"><b>Subtotal</b></td>
-    <td class="list-item2 sbttl" align="right"><b>' . number_format($subttl, 0, ',', '.') . '</b></td>
+    <td class="list-item2 sbttl" colspan="5" align="left" ><b>Subtotal</b></td>
+    <td class="list-item2 sbttl" align="right" ><b>' . number_format($subttl, 0, ',', '.') . '</b></td>
 </tr>
 <tr>
     <td colspan="6" class="biaya">Rincian Biaya :</td>
    
+</tr>
+<tr>
+<td></td>
+<td  colspan="3" class="rincian-biaya"><span ><b>Priode Tanggal,</b></span>  ......../..........s/d ......../........./ '.$tahun.'</td>
+</tr>
+<tr>
+<td></td>
+<td  colspan="3" class="rincian-biaya"><span ><b>No.Kendaraan :</b></span> ....................................</td>
+</tr>
+<tr>
+<td></td>
+<td  colspan="3" class="rincian-biaya"><span ><b>Nama Driver :</b></span> .......................................</td>
 </tr>
 <tr>
 <td></td>
@@ -199,7 +212,8 @@ $html .= '
 
 $html .= '
 </tbody>
-</table>
+</table></br>
+<h5><i>Catatan : '.$nomor['catatan'].'<i/></h5>
 
 ';
 
