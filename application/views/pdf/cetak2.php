@@ -217,6 +217,7 @@ $html .= '
 
 ';
 
+
 $html .= '
 </body>
 </html>
@@ -225,6 +226,6 @@ $html .= '
 
 
 
-$mpdf = new \Mpdf\Mpdf();
+$mpdf = new \Mpdf\Mpdf(['format' =>  [215, 330]]);
 $mpdf->WriteHTML($html);
 $mpdf->Output();

@@ -3,7 +3,7 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+        <h1 class="h3 mb-0 text-gray-800">Data perkembangan kasus Covid-19 untuk wilayah Indonesia.</h1>
 
     </div>
 
@@ -11,16 +11,16 @@
     <div class="row">
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Data Stok</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">-</div>
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Positif</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="positif" >-</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            <i class="far fa-frown fa-2x text-danger"></i>
                         </div>
                     </div>
                 </div>
@@ -28,61 +28,35 @@
         </div>
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Input Biaya</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">-</div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Sembuh</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="sembuh">-</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            <i class="far fa-smile fa-2x text-success"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <a href="">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Input Penjualan</div>
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col-auto">
-                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><i class="fa fa-clipboard-list"></i></div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="progress progress-sm mr-2">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <!-- Pending Requests Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Requests</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Meninggal</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="meninggal">18</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            <i class="fas fa-sad-cry fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -172,4 +146,36 @@
 
 
 <?php $this->load->view('template/footer'); ?>
+
+<script>
+$(document).ready(function(){
+tampil();
+
+});
+
+function tampil() {
+    let dataPositif = document.getElementById("positif");
+    let dataSembuh = document.getElementById("sembuh");
+    let dataMeninggal = document.getElementById("meninggal");
+    dataPositif.innerHTML = "";
+    dataSembuh.innerHTML = "";
+    dataMeninggal.innerHTML = "";
+   
+
+    fetch("https://api.kawalcorona.com/indonesia/")
+        .then(res => res.json())
+        .then(res => {
+            const dt = res;
+            console.log(dt);
+            dt.forEach(data => {
+             console.log(data.positif);
+                dataPositif.innerHTML = `${data.positif}`;
+                dataSembuh.innerHTML = `${data.sembuh}`;
+                dataMeninggal.innerHTML = `${data.meninggal}`;
+            });
+        });
+
+}
+
+</script>
 <?php $this->load->view('template/foothtml'); ?>

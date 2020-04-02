@@ -27,7 +27,7 @@
                 <div class="col-md-4">
                     <div class="input-group input-group-sm mb-3">
                         <input type="hidden" name="id_sales" id="id_sales" class="id_sales" value="<?= $this->session->userdata('id_sales'); ?>">
-                        <input type="text" class="form-control " name="nama_sales" id="nama_sales" placeholder="Cari/Pilih Sales" readonly value="<?= $this->session->userdata('nama_sales'); ?>">
+                        <input type="text" class="form-control "name="nama_sales" id="nama_sales" placeholder="Cari/Pilih Sales" readonly value="<?= $this->session->userdata('nama_sales'); ?>">
                         <div class="input-group-append">
                             <button class="btn btn-warning" type="button" id="button-addon2" data-toggle="modal" data-target="#modal-sales"><i class="fas fa-search"></i></button>
                         </div>
@@ -378,7 +378,6 @@
                 hapus_session_sales();
                 setTimeout(function() {
                     window.location.href = base_url + 'stok';
-
                 }, 300);
             }
         });
