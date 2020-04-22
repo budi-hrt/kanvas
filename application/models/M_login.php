@@ -8,7 +8,7 @@ class M_login extends CI_model
     public function get_login($u, $p)
     {
         $pwd = md5($p);
-        $this->db->join('role r', 'u.role_id=r.id', 'left');
+        $this->db->join('user_role r', 'u.role_id=r.id', 'left');
         $this->db->where('u.username', $u);
         $this->db->where('u.password', $pwd);
         $query = $this->db->get('user u');
@@ -19,7 +19,7 @@ class M_login extends CI_model
                     'nama_user' => $row->nama_user,
                     'username' => $row->username,
                     'password' => $row->password,
-                    'role' => $row->role
+                    'role_id' => $row->role_id
 
                 );
                 $this->session->set_userdata($sess);

@@ -1,0 +1,78 @@
+@font-face {
+	font-family: "Poppins";
+	src: url("../font/Poppins-Regular.ttf");
+}
+
+body {
+	font-family: arial;
+	font-size: 10pt;
+}
+
+.judul {
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+}
+
+p {
+	margin: 0pt;
+	font-family: "Courier New", Courier, monospace;
+}
+
+/* table.items {
+	border: 0.1mm solid #000000;
+} */
+
+td {
+	vertical-align: top;
+}
+
+.items td {
+	border-left: 0.1mm solid #000000;
+	border-right: 0.1mm solid #000000;
+}
+
+table thead td {
+	background-color: #eeeeee;
+	text-align: center;
+	border: 0.1mm solid #000000;
+	/* font-variant: small-caps; */
+	font-weight: bold;
+	padding: 1mm;
+}
+
+.items td.list-item {
+	padding: 0.8mm;
+	border-bottom: 0.1mm solid rgb(37, 37, 37);
+	font-size: 11px;
+	text-transform: uppercase;
+}
+.items td.totals {
+	text-align: right;
+	padding: 0.8mm;
+	border: 0.1mm solid #000000;
+	background-color: #eeeeee;
+	font-weight: bold;
+}
+
+.items td.totals.blank {
+	background-color: white;
+}
+
+.items td.no-border {
+	padding: 0.8mm;
+	border-bottom: 0mm none;
+	font-size: 11px;
+}
+.items td.no-border.bawah {
+	border-bottom: 0.1mm solid #000000;
+}
+
+/* Biaya */
+.judul.biaya {
+	margin-top: 20px;
+}
+
+.t-biaya {
+	font-size: 12px;
+}

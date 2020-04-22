@@ -1,4 +1,4 @@
-<!-- Sidebar -->
+Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
@@ -31,14 +31,14 @@
 
 
     <!-- Nav Item - Charts -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="<?= base_url('sales'); ?>">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Sales</span></a>
-    </li>
+    </li> -->
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="<?= base_url('produk'); ?>">
             <i class="fas fa-fw fa-table"></i>
             <span>Produk</span></a>
@@ -52,7 +52,7 @@
         <a class="nav-link" href="<?= base_url('stok/list_awl'); ?>">
             <i class="fas fa-fw fa-edit"></i>
             <span>List Stok Awal</span></a>
-    </li>
+    </li> -->
 
     <!-- <li class="nav-item">
         <a class="nav-link" href="<?= base_url('stok_akhir'); ?>">
@@ -100,4 +100,4 @@
     </div>
 
 </ul>
-<!-- End of Sidebar -->
+<!-- End of Sidebar
