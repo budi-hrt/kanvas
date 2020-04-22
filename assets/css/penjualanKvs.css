@@ -13,6 +13,11 @@ body {
 	font-size: 14px;
 	text-align: center;
 }
+.logo{
+	position: absolute;
+	left: 50;
+	top: 50;
+}
 
 p {
 	margin: 0pt;
@@ -47,6 +52,10 @@ table thead td {
 	font-size: 11px;
 	text-transform: uppercase;
 }
+
+.items td.list-item.terjual{
+	background-color: rgb(250, 244, 182);
+}
 .items td.totals {
 	text-align: right;
 	padding: 0.8mm;
@@ -68,6 +77,8 @@ table thead td {
 	border-bottom: 0.1mm solid #000000;
 }
 
+
+
 /* Biaya */
 .judul.biaya {
 	margin-top: 20px;
@@ -76,3 +87,16 @@ table thead td {
 .t-biaya {
 	font-size: 12px;
 }
+
+
+
+.km{
+position: absolute;
+right:-190px;
+margin-top: 1px;
+}
+
+table.items.t-km  thead td{
+background-color: rgb(213, 228, 255);
+}
+
